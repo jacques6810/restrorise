@@ -129,17 +129,6 @@ const Home = () => {
     exit: { opacity: 0, y: -20 },
   };
 
-  const wheelVariant = {
-    spin: {
-      rotate: 1800,
-      transition: {
-        duration: 4,
-        ease: [0.17, 0.67, 0.21, 0.99],
-      },
-    },
-    initial: { rotate: 0 },
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Floating decorative elements */}
@@ -387,7 +376,7 @@ const Home = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="bg-white p-4 rounded-lg shadow-md border border-gray-100 mb-6"
+                className="bg-white p-6 rounded-lg shadow-md border border-gray-100 mb-6"
               >
                 <div className="flex justify-between items-center mb-3">
                   <h3 className="font-medium text-gray-700">
@@ -396,9 +385,23 @@ const Home = () => {
                   <button
                     onClick={restoreAllSegments}
                     disabled={isSpinning}
-                    className="text-sm text-purple-600 hover:text-purple-800 transition-colors"
+                    className="p-1 text-purple-600 hover:text-purple-800 transition-colors"
+                    title="Kembalikan semua segmen"
                   >
-                    Kembalikan Semua
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                      />
+                    </svg>
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -413,7 +416,7 @@ const Home = () => {
                         disabled={isSpinning}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`px-3 py-1 rounded-full text-sm flex items-center gap-1 ${
+                        className={`px-3 py-1 font-semibold rounded-full text-sm flex items-center gap-1 ${
                           option.textColor
                         } bg-opacity-20 ${option.color.replace("#", "bg-")}`}
                       >
