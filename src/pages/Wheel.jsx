@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Wheel = () => {
@@ -9,11 +9,36 @@ const Wheel = () => {
   const wheelRef = useRef(null);
 
   const options = [
-    { label: "T", fullLabel: "Truth", color: "#f87171" }, // Red
-    { label: "D", fullLabel: "Dare", color: "#60a5fa" }, // Blue
-    { label: "S", fullLabel: "Siapa Kami", color: "#34d399" }, // Green
-    { label: "G", fullLabel: "Gambar", color: "#fbbf24" }, // Yellow
-    { label: "H", fullLabel: "Hots", color: "#a78bfa" }, // Purple
+    {
+      label: "T",
+      fullLabel: "Truth",
+      color: "#f87171",
+      textColor: "text-red-500",
+    }, // Red
+    {
+      label: "D",
+      fullLabel: "Dare",
+      color: "#60a5fa",
+      textColor: "text-blue-500",
+    }, // Blue
+    {
+      label: "S",
+      fullLabel: "Siapa Kami",
+      color: "#34d399",
+      textColor: "text-green-500",
+    }, // Green
+    {
+      label: "G",
+      fullLabel: "Gambar",
+      color: "#fbbf24",
+      textColor: "text-yellow-500",
+    }, // Yellow
+    {
+      label: "H",
+      fullLabel: "Hots",
+      color: "#a78bfa",
+      textColor: "text-purple-500",
+    }, // Purple
   ];
 
   const spinWheel = () => {
@@ -39,7 +64,11 @@ const Wheel = () => {
     }
 
     setTimeout(() => {
-      setResult(options[winningSegment].fullLabel);
+      setResult({
+        label: options[winningSegment].label,
+        value: options[winningSegment].fullLabel,
+        textColor: options[winningSegment].textColor,
+      });
       setSpinning(false);
 
       if (wheelRef.current) {
@@ -61,13 +90,30 @@ const Wheel = () => {
     return `M ${radius} ${radius} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
   };
 
+  // Animation variants
+  const wheelVariant = {
+    initial: { rotate: 0 },
+    spin: { rotate: 360 * 5 }, // 5 full rotations
+  };
+
+  const resultVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const guideVariant = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 50 },
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 flex flex-col items-center justify-center p-4">
       <motion.div
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-4"
+        className="text-center mb-6"
       >
         <h1 className="text-4xl font-bold text-purple-800 mb-2">
           Spin & Challenge!
@@ -126,6 +172,22 @@ const Wheel = () => {
         </div>
 
         {/* Pointer */}
+        {/* <motion.div
+          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 z-10"
+          animate={{
+            y: [0, -5, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <svg viewBox="0 0 24 24" className="w-full h-full">
+            <polygon points="12,2 22,22 2,22" fill="#ef4444" />
+          </svg>
+        </motion.div> */}
+        {/* Pointer */}
         <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-8 h-8">
           <svg viewBox="0 0 24 24" className="w-full h-full rotate-180">
             <polygon
@@ -149,8 +211,10 @@ const Wheel = () => {
             <h2 className="text-xl font-semibold text-gray-700 mb-2">
               Hasil Putaran:
             </h2>
-            <p className="text-3xl font-bold text-purple-600">{result}</p>
-            {result === "Siapa Kami" && (
+            <p className={`text-3xl font-bold ${result.textColor}`}>
+              {result.value} ({result.label})
+            </p>
+            {result.label === "S" && (
               <p className="mt-2 text-gray-600">
                 Kenali lebih jauh tentang pembuat permainan ini!
               </p>
@@ -163,7 +227,7 @@ const Wheel = () => {
       <motion.button
         onClick={spinWheel}
         disabled={spinning}
-        className={`px-8 py-3 rounded-full text-white font-bold text-lg shadow-lg mb-8 ${
+        className={`px-8 py-3 rounded-full text-white font-bold text-lg shadow-lg mb-6 ${
           spinning
             ? "bg-gray-500 cursor-not-allowed"
             : "bg-purple-600 hover:bg-purple-700"
@@ -254,7 +318,7 @@ const Wheel = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        © 2025 Spin & Challenge. All fun reserved.
+        © {new Date().getFullYear()} Spin & Challenge. All fun reserved.
       </motion.div>
     </div>
   );

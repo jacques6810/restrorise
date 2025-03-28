@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 // import { useMediaQuery } from "react-responsive";
 
 const Home = () => {
-  const [result, setResult] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [result, setResult] = useState(null);
+  const [rotation, setRotation] = useState(0);
   const [showGuide, setShowGuide] = useState(false);
   const wheelRef = useRef(null);
   //   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
@@ -13,33 +14,38 @@ const Home = () => {
     {
       label: "T",
       value: "Truth",
-      color: "bg-red-500",
+      fullLabel: "Truth",
+      color: "#f87171",
       textColor: "text-red-500",
-    },
+    }, // Red
     {
       label: "D",
       value: "Dare",
-      color: "bg-blue-500",
+      fullLabel: "Dare",
+      color: "#60a5fa",
       textColor: "text-blue-500",
-    },
+    }, // Blue
     {
       label: "S",
-      value: "Siapa Kami",
-      color: "bg-emerald-500",
-      textColor: "text-emerald-500",
-    },
+      value: "Siapa Kami?",
+      fullLabel: "Siapa Kami",
+      color: "#34d399",
+      textColor: "text-green-500",
+    }, // Green
     {
       label: "G",
       value: "Gambar",
-      color: "bg-amber-400",
-      textColor: "text-amber-500",
-    },
+      fullLabel: "Gambar",
+      color: "#fbbf24",
+      textColor: "text-yellow-500",
+    }, // Yellow
     {
       label: "H",
       value: "Hots",
-      color: "bg-purple-500",
+      fullLabel: "Hots",
+      color: "#a78bfa",
       textColor: "text-purple-500",
-    },
+    }, // Purple
   ];
 
   const spinWheel = () => {
@@ -48,25 +54,47 @@ const Home = () => {
     setIsSpinning(true);
     setResult(null);
 
-    const degrees = Math.floor(1800 + Math.random() * 1800);
+    const segmentAngle = 360 / options.length;
+    const extraRotation = Math.floor(Math.random() * 360);
+    const fullRotations = 5 * 360 + extraRotation;
+    const totalRotation = rotation + fullRotations;
+    const normalizedRotation = totalRotation % 360;
+    const winningSegment =
+      Math.floor((360 - normalizedRotation) / segmentAngle) % options.length;
+
+    setRotation(totalRotation);
 
     if (wheelRef.current) {
-      wheelRef.current.style.transform = `rotate(${degrees}deg)`;
+      wheelRef.current.style.transition =
+        "transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)";
+      wheelRef.current.style.transform = `rotate(${totalRotation}deg)`;
     }
 
     setTimeout(() => {
+      setResult({
+        label: options[winningSegment].label,
+        value: options[winningSegment].fullLabel,
+        textColor: options[winningSegment].textColor,
+      });
       setIsSpinning(false);
-      const segmentAngle = 360 / options.length;
-      console.log("Setiap segmen:", segmentAngle, "derajat");
-      const normalizedDegrees = degrees % 360;
-      console.log("Derajat Putaran:", normalizedDegrees);
-      const invertedDegrees = 360 - normalizedDegrees;
-      console.log("Derajat Terbalik:", invertedDegrees);
-      const winningSegment = Math.floor(invertedDegrees / segmentAngle);
-      console.log("Segmen Menang:", winningSegment);
 
-      setResult(options[winningSegment]);
+      if (wheelRef.current) {
+        wheelRef.current.style.transition = "none";
+      }
     }, 4000);
+  };
+
+  const getSegmentPath = (index, totalSegments, radius, width) => {
+    const angle = (2 * Math.PI) / totalSegments;
+    const startAngle = index * angle;
+    const endAngle = (index + 1) * angle;
+
+    const x1 = radius + radius * Math.cos(startAngle);
+    const y1 = radius + radius * Math.sin(startAngle);
+    const x2 = radius + radius * Math.cos(endAngle);
+    const y2 = radius + radius * Math.sin(endAngle);
+
+    return `M ${radius} ${radius} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
   };
 
   // Animation variants
@@ -164,44 +192,41 @@ const Home = () => {
             <div className="relative w-64 h-64 md:w-80 md:h-80 mb-8">
               <motion.div
                 ref={wheelRef}
-                className="w-full h-full rounded-full border-8 border-white shadow-lg relative overflow-hidden"
-                style={{
-                  background:
-                    "conic-gradient(from 0deg, #EF4444 0% 20%, #3B82F6 20% 40%, #10B981 40% 60%, #F59E0B 60% 80%, #8B5CF6 80% 100%)",
-                }}
-                animate={isSpinning ? "spin" : "initial"}
-                variants={wheelVariant}
+                className="w-full h-full rounded-full shadow-xl relative overflow-hidden"
+                style={{ transform: `rotate(${rotation}deg)` }}
               >
-                {options.map((option, index) => {
-                  const angle = (360 / options.length) * index;
-                  return (
-                    <div
+                <svg viewBox="0 0 200 200" className="w-full h-full">
+                  {options.map((option, index) => (
+                    <path
                       key={index}
-                      className="absolute w-1/2 h-1/2 origin-bottom-right"
-                      style={{
-                        transform: `rotate(${angle}deg) skewY(${
-                          90 - 360 / options.length
-                        }deg)`,
-                        left: "0",
-                        top: "0",
-                      }}
-                    >
-                      <span
-                        className={`absolute text-white font-bold text-xl ${option.textColor}`}
-                        style={{
-                          transform: `skewY(${
-                            360 / options.length - 90
-                          }deg) rotate(${360 / options.length / 2}deg)`,
-                          bottom: "20px",
-                          right: "20px",
-                          textShadow: "0 1px 2px rgba(0,0,0,0.3)",
-                        }}
+                      d={getSegmentPath(index, options.length, 100, 200)}
+                      fill={option.color}
+                    />
+                  ))}
+                  {options.map((option, index) => {
+                    const angle =
+                      (360 / options.length) * index + 360 / options.length / 2;
+                    const radian = (angle * Math.PI) / 180;
+                    const textX = 100 + 70 * Math.cos(radian);
+                    const textY = 100 + 70 * Math.sin(radian);
+
+                    return (
+                      <text
+                        key={index}
+                        x={textX}
+                        y={textY}
+                        textAnchor="middle"
+                        fill="white"
+                        fontSize="16"
+                        fontWeight="bold"
+                        transform={`rotate(${angle}, ${textX}, ${textY})`}
+                        className="select-none"
                       >
                         {option.label}
-                      </span>
-                    </div>
-                  );
-                })}
+                      </text>
+                    );
+                  })}
+                </svg>
               </motion.div>
 
               {/* Wheel Center */}
@@ -209,18 +234,16 @@ const Home = () => {
                 <div className="w-4 h-4 rounded-full bg-gradient-to-br from-purple-400 to-indigo-600"></div>
               </div>
 
-              {/* Pointer dengan animasi naik turun saja */}
-              <motion.div
-                className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-0 h-0 border-l-12 border-r-12 border-b-20 border-l-transparent border-r-transparent border-b-red-500 z-20 rotate-180 "
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
+              {/* Pointer */}
+              <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-8 h-8">
+                <svg viewBox="0 0 24 24" className="w-full h-full rotate-180">
+                  <polygon
+                    points="12,2 22,22 2,22"
+                    fill="#ef4444"
+                    transform="rotate(90, 12, 12)"
+                  />
+                </svg>
+              </div>
             </div>
 
             <motion.button
@@ -378,7 +401,7 @@ const Home = () => {
                       />
                     </svg>
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-800">
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-800">
                     Panduan Permainan
                   </h2>
                 </div>
