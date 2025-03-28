@@ -1,18 +1,19 @@
-// Wheel.jsx
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Wheel = () => {
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState(null);
   const [rotation, setRotation] = useState(0);
+  const [showGuide, setShowGuide] = useState(false);
   const wheelRef = useRef(null);
 
   const options = [
-    { label: "Truth", color: "#f87171" }, // Red
-    { label: "Dare", color: "#60a5fa" }, // Blue
-    { label: "Siapa Kami?", color: "#34d399" }, // Green
-    { label: "Gambar", color: "#fbbf24" }, // Yellow
-    { label: "Hots", color: "#a78bfa" }, // Purple
+    { label: "T", fullLabel: "Truth", color: "#f87171" }, // Red
+    { label: "D", fullLabel: "Dare", color: "#60a5fa" }, // Blue
+    { label: "S", fullLabel: "Siapa Kami", color: "#34d399" }, // Green
+    { label: "G", fullLabel: "Gambar", color: "#fbbf24" }, // Yellow
+    { label: "H", fullLabel: "Hots", color: "#a78bfa" }, // Purple
   ];
 
   const spinWheel = () => {
@@ -21,40 +22,32 @@ const Wheel = () => {
     setSpinning(true);
     setResult(null);
 
-    // Random number of full rotations (5-10) plus a random segment
     const segmentAngle = 360 / options.length;
     const extraRotation = Math.floor(Math.random() * 360);
     const fullRotations = 5 * 360 + extraRotation;
-
-    // Calculate which segment we'll land on
     const totalRotation = rotation + fullRotations;
     const normalizedRotation = totalRotation % 360;
     const winningSegment =
       Math.floor((360 - normalizedRotation) / segmentAngle) % options.length;
 
-    console.log("Spinning to segment", winningSegment);
     setRotation(totalRotation);
 
-    // Apply the spin animation
     if (wheelRef.current) {
       wheelRef.current.style.transition =
         "transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)";
       wheelRef.current.style.transform = `rotate(${totalRotation}deg)`;
     }
 
-    // Show result after spin completes
     setTimeout(() => {
-      setResult(options[winningSegment].label);
+      setResult(options[winningSegment].fullLabel);
       setSpinning(false);
 
-      // Reset transition for next spin
       if (wheelRef.current) {
         wheelRef.current.style.transition = "none";
       }
     }, 4000);
   };
 
-  // Calculate the SVG path for each segment
   const getSegmentPath = (index, totalSegments, radius, width) => {
     const angle = (2 * Math.PI) / totalSegments;
     const startAngle = index * angle;
@@ -70,13 +63,23 @@ const Wheel = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 flex flex-col items-center justify-center p-4">
-      <h1 className="text-4xl font-bold text-purple-800 mb-8">
-        Spin the Wheel!
-      </h1>
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-4"
+      >
+        <h1 className="text-4xl font-bold text-purple-800 mb-2">
+          Spin & Challenge!
+        </h1>
+        <p className="text-lg text-purple-600">
+          Putar roda untuk mendapatkan tantangan!
+        </p>
+      </motion.div>
 
-      <div className="relative w-full max-w-md aspect-square mb-12">
+      <div className="relative w-full max-w-md aspect-square mb-8">
         {/* Wheel */}
-        <div
+        <motion.div
           ref={wheelRef}
           className="w-full h-full rounded-full shadow-xl relative overflow-hidden"
           style={{ transform: `rotate(${rotation}deg)` }}
@@ -86,15 +89,15 @@ const Wheel = () => {
               <path
                 key={index}
                 d={getSegmentPath(index, options.length, 100, 200)}
-                fill={option.color.replace("bg-", "").replace("-", " ")} // Convert Tailwind class to color
+                fill={option.color}
               />
             ))}
             {options.map((option, index) => {
               const angle =
                 (360 / options.length) * index + 360 / options.length / 2;
               const radian = (angle * Math.PI) / 180;
-              const textX = 100 + 60 * Math.cos(radian);
-              const textY = 100 + 60 * Math.sin(radian);
+              const textX = 100 + 70 * Math.cos(radian);
+              const textY = 100 + 70 * Math.sin(radian);
 
               return (
                 <text
@@ -103,7 +106,7 @@ const Wheel = () => {
                   y={textY}
                   textAnchor="middle"
                   fill="white"
-                  fontSize="12"
+                  fontSize="16"
                   fontWeight="bold"
                   transform={`rotate(${angle}, ${textX}, ${textY})`}
                   className="select-none"
@@ -113,14 +116,14 @@ const Wheel = () => {
               );
             })}
           </svg>
-        </div>
+        </motion.div>
 
-        {/* Pointer */}
-        {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8">
-          <svg viewBox="0 0 24 24" className="w-full h-full">
-            <polygon points="12,2 22,22 2,22" fill="#ef4444" />
-          </svg>
-        </div> */}
+        {/* Center circle */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center">
+          <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-purple-200 rounded-full"></div>
+          </div>
+        </div>
 
         {/* Pointer */}
         <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-8 h-8">
@@ -134,40 +137,125 @@ const Wheel = () => {
         </div>
       </div>
 
+      {/* Result Display */}
+      <AnimatePresence>
+        {result && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mt-4 p-6 bg-white rounded-xl shadow-lg max-w-md w-full text-center mb-6"
+          >
+            <h2 className="text-xl font-semibold text-gray-700 mb-2">
+              Hasil Putaran:
+            </h2>
+            <p className="text-3xl font-bold text-purple-600">{result}</p>
+            {result === "Siapa Kami" && (
+              <p className="mt-2 text-gray-600">
+                Kenali lebih jauh tentang pembuat permainan ini!
+              </p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Spin Button */}
-      <button
+      <motion.button
         onClick={spinWheel}
         disabled={spinning}
-        className={`px-8 py-3 rounded-full text-white font-bold text-lg shadow-lg transition-all duration-300 ${
+        className={`px-8 py-3 rounded-full text-white font-bold text-lg shadow-lg mb-8 ${
           spinning
             ? "bg-gray-500 cursor-not-allowed"
-            : "bg-purple-600 hover:bg-purple-700 hover:scale-105"
+            : "bg-purple-600 hover:bg-purple-700"
         }`}
+        whileHover={!spinning ? { scale: 1.05 } : {}}
+        whileTap={!spinning ? { scale: 0.95 } : {}}
       >
-        {spinning ? "Spinning..." : "SPIN"}
-      </button>
+        {spinning ? "Memutar..." : "PUTAR RODA!"}
+      </motion.button>
 
-      {/* Result Display */}
-      {result && (
-        <div className="mt-8 p-6 bg-white rounded-xl shadow-lg max-w-md w-full text-center animate-bounce-in">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-2">
-            You got:
-          </h2>
-          <p className="text-4xl font-bold text-purple-600">{result}</p>
-        </div>
-      )}
+      {/* Guide Button */}
+      <motion.button
+        onClick={() => setShowGuide(!showGuide)}
+        className="px-6 py-2 rounded-full bg-white text-purple-600 font-medium shadow mb-4"
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
+      >
+        {showGuide ? "Tutup Panduan" : "Panduan Permainan"}
+      </motion.button>
 
-      {/* Wheel segments info */}
-      <div className="mt-8 grid grid-cols-2 md:grid-cols-5 gap-2 w-full max-w-md">
-        {options.map((option, index) => (
-          <div key={index} className="flex items-center">
-            <div className={`w-4 h-4 rounded-full ${option.color} mr-2`}></div>
-            <span className="text-sm font-medium text-gray-700">
-              {option.label}
-            </span>
-          </div>
-        ))}
-      </div>
+      {/* Game Guide */}
+      <AnimatePresence>
+        {showGuide && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-md mb-8"
+          >
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-purple-800 mb-4">
+                Panduan Permainan
+              </h2>
+
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-800">
+                    1. Cara Memutar Roda
+                  </h3>
+                  <p className="text-gray-600">
+                    Klik tombol "PUTAR RODA!" untuk memulai permainan. Roda akan
+                    berputar secara acak dan berhenti pada salah satu pilihan.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-800">
+                    2. Pilihan yang Tersedia
+                  </h3>
+                  <ul className="list-disc pl-5 text-gray-600 space-y-1">
+                    <li>T - Truth (Pertanyaan jujur)</li>
+                    <li>D - Dare (Tantangan)</li>
+                    <li>S - Siapa Kami (Tentang pembuat game)</li>
+                    <li>G - Gambar (Tantangan menggambar)</li>
+                    <li>H - Hots (Tantangan seru)</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-800">
+                    3. Setelah Mendapat Hasil
+                  </h3>
+                  <p className="text-gray-600">
+                    Ikuti instruksi sesuai dengan pilihan yang Anda dapatkan.
+                    Anda bisa memutar roda lagi untuk tantangan berikutnya.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-800">
+                    4. Mode Bermain
+                  </h3>
+                  <p className="text-gray-600">
+                    Permainan ini bisa dimainkan sendiri atau bersama teman.
+                    Jika bermain bersama, bergantianlah dalam memutar roda.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Footer */}
+      <motion.div
+        className="text-center text-gray-500 text-sm mt-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        © 2025 Spin & Challenge. All fun reserved.
+      </motion.div>
     </div>
   );
 };
