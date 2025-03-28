@@ -1,55 +1,59 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-// import { useMediaQuery } from "react-responsive";
 
 const Home = () => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState(null);
   const [rotation, setRotation] = useState(0);
   const [showGuide, setShowGuide] = useState(false);
+  const [removedSegments, setRemovedSegments] = useState([]);
   const wheelRef = useRef(null);
-  //   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
-  const options = [
+  const allOptions = [
     {
       label: "T",
       value: "Truth",
       fullLabel: "Truth",
       color: "#f87171",
       textColor: "text-red-500",
-    }, // Red
+    },
     {
       label: "D",
       value: "Dare",
       fullLabel: "Dare",
       color: "#60a5fa",
       textColor: "text-blue-500",
-    }, // Blue
+    },
     {
       label: "S",
       value: "Siapa Kami?",
       fullLabel: "Siapa Kami",
       color: "#34d399",
       textColor: "text-green-500",
-    }, // Green
+    },
     {
       label: "G",
       value: "Gambar",
       fullLabel: "Gambar",
       color: "#fbbf24",
       textColor: "text-yellow-500",
-    }, // Yellow
+    },
     {
       label: "H",
       value: "Hots",
       fullLabel: "Hots",
       color: "#a78bfa",
       textColor: "text-purple-500",
-    }, // Purple
+    },
   ];
 
+  // Filter out removed segments
+  const options = allOptions.filter(
+    (option) => !removedSegments.includes(option.label)
+  );
+
   const spinWheel = () => {
-    if (isSpinning) return;
+    if (isSpinning || options.length === 0) return;
 
     setIsSpinning(true);
     setResult(null);
@@ -84,6 +88,22 @@ const Home = () => {
     }, 4000);
   };
 
+  const removeSegment = (label) => {
+    if (isSpinning || options.length <= 2) return;
+    setRemovedSegments([...removedSegments, label]);
+    setResult(null);
+  };
+
+  const restoreSegment = (label) => {
+    if (isSpinning) return;
+    setRemovedSegments(removedSegments.filter((item) => item !== label));
+  };
+
+  const restoreAllSegments = () => {
+    if (isSpinning) return;
+    setRemovedSegments([]);
+  };
+
   const getSegmentPath = (index, totalSegments, radius, width) => {
     const angle = (2 * Math.PI) / totalSegments;
     const startAngle = index * angle;
@@ -97,7 +117,18 @@ const Home = () => {
     return `M ${radius} ${radius} L ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2} Z`;
   };
 
-  // Animation variants
+  // Add these variants at the top of your component, just below the state declarations
+  const resultVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const guideVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+    exit: { opacity: 0, y: -20 },
+  };
+
   const wheelVariant = {
     spin: {
       rotate: 1800,
@@ -107,25 +138,6 @@ const Home = () => {
       },
     },
     initial: { rotate: 0 },
-  };
-
-  const resultVariant = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
-  const guideVariant = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3 },
-    },
-    exit: { opacity: 0, y: -20 },
   };
 
   return (
@@ -245,14 +257,17 @@ const Home = () => {
                 </svg>
               </div>
             </div>
-
             <motion.button
               onClick={spinWheel}
-              disabled={isSpinning}
-              whileHover={!isSpinning ? { scale: 1.05 } : {}}
-              whileTap={!isSpinning ? { scale: 0.95 } : {}}
+              disabled={isSpinning || options.length < 2} // Disable if less than 2 segments
+              whileHover={
+                !isSpinning && options.length >= 2 ? { scale: 1.05 } : {}
+              }
+              whileTap={
+                !isSpinning && options.length >= 2 ? { scale: 0.95 } : {}
+              }
               className={`px-8 py-4 text-xl font-bold rounded-full shadow-lg relative overflow-hidden ${
-                isSpinning
+                isSpinning || options.length < 2
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white"
               }`}
@@ -275,10 +290,12 @@ const Home = () => {
                     />
                   ))}
                 </motion.span>
+              ) : options.length < 2 ? (
+                "Tambah Segmen"
               ) : (
                 "PUTAR RODA!"
               )}
-            </motion.button>
+            </motion.button>{" "}
           </div>
 
           {/* Result Section */}
@@ -291,21 +308,56 @@ const Home = () => {
                   animate="visible"
                   className="bg-white p-6 rounded-xl shadow-md border border-gray-100 mb-6"
                 >
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                    Hasil Putaran:
-                  </h3>
-                  <div
-                    className={`text-3xl font-bold ${result.textColor} flex items-center gap-3`}
-                  >
-                    <span className="text-4xl">
-                      {result.label === "T" && "🤔"}
-                      {result.label === "D" && "😈"}
-                      {result.label === "S" && "👥"}
-                      {result.label === "G" && "🖼️"}
-                      {result.label === "H" && "🔥"}
-                    </span>
-                    {result.value}{" "}
-                    <span className="text-gray-400">({result.label})</span>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        Hasil Putaran:
+                      </h3>
+                      <div
+                        className={`text-3xl font-bold ${result.textColor} flex items-center gap-3`}
+                      >
+                        <span className="text-2xl ">
+                          {result.label === "T" && "🤔"}
+                          {result.label === "D" && "😈"}
+                          {result.label === "S" && "👥"}
+                          {result.label === "G" && "🖼️"}
+                          {result.label === "H" && "🔥"}
+                        </span>
+                        {result.value}{" "}
+                        <span className="text-gray-400 text-xl">
+                          ({result.label})
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => removeSegment(result.label)}
+                      disabled={isSpinning || options.length <= 2}
+                      className={`p-2 ${
+                        isSpinning || options.length <= 2
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "text-red-500 hover:text-red-700"
+                      } transition-colors`}
+                      title={
+                        options.length <= 2
+                          ? "Minimal harus ada 2 segmen"
+                          : "Hapus dari roda"
+                      }
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
                   </div>
 
                   <div className="mt-4 p-4 bg-gray-50 rounded-lg">
@@ -328,6 +380,64 @@ const Home = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Removed Segments Panel */}
+            {removedSegments.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="bg-white p-4 rounded-lg shadow-md border border-gray-100 mb-6"
+              >
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-medium text-gray-700">
+                    Segmen yang Dihapus:
+                  </h3>
+                  <button
+                    onClick={restoreAllSegments}
+                    disabled={isSpinning}
+                    className="text-sm text-purple-600 hover:text-purple-800 transition-colors"
+                  >
+                    Kembalikan Semua
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {removedSegments.map((label) => {
+                    const option = allOptions.find(
+                      (opt) => opt.label === label
+                    );
+                    return (
+                      <motion.button
+                        key={label}
+                        onClick={() => restoreSegment(label)}
+                        disabled={isSpinning}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`px-3 py-1 rounded-full text-sm flex items-center gap-1 ${
+                          option.textColor
+                        } bg-opacity-20 ${option.color.replace("#", "bg-")}`}
+                      >
+                        {option.label} - {option.value}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                          />
+                        </svg>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
 
             <motion.button
               onClick={() => setShowGuide(true)}
