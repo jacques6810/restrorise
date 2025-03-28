@@ -178,7 +178,7 @@ const Home = () => {
           />
           <h1 className="text-3xl md:text-4xl font-bold text-white relative z-10">
             <span className="inline-block mr-2">🎡</span>
-            Spin & Challenge!
+            RESTRORISE
             <span className="inline-block ml-2">🎲</span>
           </h1>
           <p className="text-white/80 mt-2 relative z-10">
@@ -258,12 +258,22 @@ const Home = () => {
               }`}
             >
               {isSpinning ? (
-                <motion.span
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="inline-block"
-                >
-                  🔄
+                <motion.span className="inline-flex items-center space-x-1 h-6">
+                  {[0, 1, 2].map((i) => (
+                    <motion.span
+                      key={i}
+                      className="block w-2 h-2 bg-white rounded-full"
+                      animate={{
+                        y: [0, -6, 0],
+                      }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 0.2,
+                      }}
+                    />
+                  ))}
                 </motion.span>
               ) : (
                 "PUTAR RODA!"
@@ -489,7 +499,7 @@ const Home = () => {
         transition={{ delay: 0.5 }}
         className="mt-8 text-center text-gray-500 text-sm"
       >
-        © {new Date().getFullYear()} Spin & Challenge. All fun reserved.
+        © {new Date().getFullYear()} Restrorise. All fun reserved.
       </motion.footer>
     </div>
   );
