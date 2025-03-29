@@ -79,6 +79,7 @@ const Home = () => {
         label: options[winningSegment].label,
         value: options[winningSegment].fullLabel,
         textColor: options[winningSegment].textColor,
+        color: options[winningSegment].color,
       });
       setIsSpinning(false);
 
@@ -351,20 +352,16 @@ const Home = () => {
 
                   <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                     <h4 className="font-medium text-gray-700 mb-2">
-                      Apa yang harus dilakukan:
+                      Silahkan lanjutkan permainan:
                     </h4>
-                    <p className="text-gray-600">
-                      {result.label === "T" &&
-                        "Jawablah pertanyaan jujur dari temanmu!"}
-                      {result.label === "D" &&
-                        "Lakukan tantangan yang diberikan temanmu!"}
-                      {result.label === "S" &&
-                        "Kenali lebih jauh tentang pembuat permainan ini!"}
-                      {result.label === "G" &&
-                        "Ambil foto atau gambar sesuai tema yang ditentukan!"}
-                      {result.label === "H" &&
-                        "Lakukan tantangan khusus yang lebih menantang!"}
-                    </p>
+                    <button
+                      className={`font-semibold text-xl my-2 w-full px-4 py-1 text-white rounded-full shadow-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105 active:scale-95`}
+                      style={{
+                        backgroundColor: result?.color || "#ccc", // Default to gray if no result
+                      }}
+                    >
+                      Lanjutkan
+                    </button>
                   </div>
                 </motion.div>
               )}
