@@ -111,24 +111,86 @@ const CardGame = () => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4"
+          transition={{ type: "spring", stiffness: 100 }}
+          className={`mb-8 p-4 sm:p-6 rounded-2xl bg-white bg-opacity-20 backdrop-blur-sm border-2 border-white border-opacity-30 shadow-lg`}
         >
-          <h1 className={`text-3xl font-bold ${currentSegment.textColor}`}>
-            {currentSegment.title} Cards
-          </h1>
-          <div className="flex gap-3">
-            <button
-              onClick={resetCards}
-              className={`px-4 py-2 ${currentSegment.color} text-white rounded-lg font-medium shadow-md ${currentSegment.hoverColor} transition`}
-            >
-              Shuffle Cards
-            </button>
-            <button
-              onClick={() => navigate("/")}
-              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
-            >
-              Back to Wheel
-            </button>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <motion.div
+                animate={{
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "easeInOut",
+                }}
+                className={`p-3 rounded-full ${currentSegment.color} shadow-md`}
+              >
+                {React.cloneElement(currentSegment.icon, {
+                  className: "text-4xl sm:text-5xl text-white",
+                })}
+              </motion.div>
+              <div>
+                <h1
+                  className={`text-2xl sm:text-3xl font-extrabold ${currentSegment.textColor} drop-shadow-md`}
+                >
+                  {currentSegment.title} Cards
+                </h1>
+                <p className="text-sm sm:text-base text-gray-600 font-medium">
+                  Pick a card and have fun!
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={resetCards}
+                className={`px-4 py-2 ${currentSegment.color} text-white rounded-xl font-bold shadow-lg ${currentSegment.hoverColor} transition flex items-center justify-center gap-2`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                Shuffle Cards
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate("/")}
+                className="px-4 py-2 bg-white bg-opacity-90 rounded-xl font-medium shadow-lg hover:bg-opacity-100 transition flex items-center justify-center gap-2 border border-gray-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+                Back to Wheel
+              </motion.button>
+            </div>
           </div>
         </motion.div>
 
@@ -198,7 +260,7 @@ const CardGame = () => {
                       <span
                         className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold`}
                       >
-                        Challenge Card
+                        See Your Card
                       </span>
                     </div>
                   </motion.div>
@@ -209,27 +271,92 @@ const CardGame = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-8 p-4 bg-white rounded-lg shadow-md"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, type: "spring" }}
+          className={`mt-8 p-4 bg-white bg-opacity-80 backdrop-blur-sm rounded-xl shadow-lg border-2 border-white border-opacity-50`}
         >
-          <div className="flex justify-between items-center">
-            <div>
-              <span className="text-gray-600">Cards flipped: </span>
-              <span className="font-semibold">
-                {flippedCards.filter(Boolean).length} / {shuffledCards.length}
-              </span>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div
+                className={`p-2 rounded-full ${currentSegment.color} bg-opacity-20`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke={currentSegment.textColor.replace("text-", "")}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 font-medium">
+                  Cards flipped
+                </p>
+                <p className={`text-xl font-bold ${currentSegment.textColor}`}>
+                  <span className="text-2xl">
+                    {flippedCards.filter(Boolean).length}
+                  </span>
+                  <span className="mx-1 text-gray-400">/</span>
+                  <span>{shuffledCards.length}</span>
+                </p>
+              </div>
             </div>
-            <button
+
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => {
                 const allFlipped = flippedCards.every(Boolean);
                 setFlippedCards(Array(10).fill(!allFlipped));
               }}
-              className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-sm"
+              className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
+                flippedCards.every(Boolean)
+                  ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                  : `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
+              }`}
             >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d={
+                    flippedCards.every(Boolean)
+                      ? "M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                      : "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  }
+                />
+              </svg>
               {flippedCards.every(Boolean) ? "Flip All Back" : "Flip All Cards"}
-            </button>
+            </motion.button>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mt-3 w-full bg-gray-200 rounded-full h-2.5">
+            <div
+              className={`h-2.5 rounded-full ${currentSegment.color}`}
+              style={{
+                width: `${
+                  (flippedCards.filter(Boolean).length / shuffledCards.length) *
+                  100
+                }%`,
+                transition: "width 0.5s ease",
+              }}
+            ></div>
           </div>
         </motion.div>
       </div>
