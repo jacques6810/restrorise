@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { path } from "framer-motion/client";
 
 const Home = () => {
   const [isSpinning, setIsSpinning] = useState(false);
@@ -9,6 +11,8 @@ const Home = () => {
   const [removedSegments, setRemovedSegments] = useState([]);
   const wheelRef = useRef(null);
 
+  const navigate = useNavigate();
+
   const allOptions = [
     {
       label: "T",
@@ -16,6 +20,7 @@ const Home = () => {
       fullLabel: "Truth",
       color: "#f87171",
       textColor: "text-red-500",
+      path: "truth",
     },
     {
       label: "D",
@@ -23,13 +28,15 @@ const Home = () => {
       fullLabel: "Dare",
       color: "#60a5fa",
       textColor: "text-blue-500",
+      path: "dare",
     },
     {
       label: "S",
-      value: "Siapa Kami?",
-      fullLabel: "Siapa Kami",
+      value: "Siapa Aku?",
+      fullLabel: "Siapa Aku",
       color: "#34d399",
       textColor: "text-green-500",
+      path: "siapa-aku",
     },
     {
       label: "G",
@@ -37,6 +44,7 @@ const Home = () => {
       fullLabel: "Gambar",
       color: "#fbbf24",
       textColor: "text-yellow-500",
+      path: "gambar",
     },
     {
       label: "H",
@@ -44,6 +52,7 @@ const Home = () => {
       fullLabel: "Hots",
       color: "#a78bfa",
       textColor: "text-purple-500",
+      path: "hots",
     },
   ];
 
@@ -80,6 +89,7 @@ const Home = () => {
         value: options[winningSegment].fullLabel,
         textColor: options[winningSegment].textColor,
         color: options[winningSegment].color,
+        path: options[winningSegment].path,
       });
       setIsSpinning(false);
 
@@ -355,9 +365,14 @@ const Home = () => {
                       Silahkan lanjutkan permainan:
                     </h4>
                     <button
+                      onClick={() =>
+                        navigate(`/cards/${result.path}`, {
+                          state: { fromWheel: true },
+                        })
+                      }
                       className={`font-semibold text-xl my-2 w-full px-4 py-1 text-white rounded-full shadow-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105 active:scale-95`}
                       style={{
-                        backgroundColor: result?.color || "#ccc", // Default to gray if no result
+                        backgroundColor: result?.color || "#ccc",
                       }}
                     >
                       Lanjutkan
