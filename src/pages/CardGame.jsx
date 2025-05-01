@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
+import CardModal from "./CardModal";
 import "../App.css";
 
 import { FaRegComment } from "react-icons/fa"; // For Truth
-import { FaRegGrinTongueWink } from "react-icons/fa"; // For Dare
+import { GiOpenBook } from "react-icons/gi"; // For Dare
 import { FaUsers } from "react-icons/fa"; // For Siapa Aku
 import { FaImage } from "react-icons/fa"; // For Gambar
 import { FaFire } from "react-icons/fa"; // For Hots
@@ -29,7 +30,7 @@ const segmentData = {
     color: "bg-blue-500",
     hoverColor: "hover:bg-blue-600",
     textColor: "text-blue-500",
-    icon: <FaRegGrinTongueWink className="text-6xl text-white opacity-80" />,
+    icon: <GiOpenBook className="text-6xl text-white opacity-80" />,
     cards: Array(10)
       .fill()
       .map((_, i) => ({
@@ -88,6 +89,7 @@ const CardGame = () => {
   const [flippedCards, setFlippedCards] = useState(Array(10).fill(false));
   const [shuffledCards, setShuffledCards] = useState([]);
   const currentSegment = segmentData[segment] || segmentData.truth;
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
     setShuffledCards([...currentSegment.cards].sort(() => Math.random() - 0.5));
@@ -257,8 +259,13 @@ const CardGame = () => {
                     </div>
 
                     <div className="w-full flex justify-center">
+                      {/* Inside the flipped card section (where the "See Your Card" button is) */}
                       <span
-                        className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedCard(card);
+                        }}
+                        className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold cursor-pointer hover:shadow-md transition`}
                       >
                         See Your Card
                       </span>
@@ -360,6 +367,13 @@ const CardGame = () => {
           </div>
         </motion.div>
       </div>
+      {selectedCard && (
+        <CardModal
+          card={selectedCard}
+          segment={currentSegment}
+          onClose={() => setSelectedCard(null)}
+        />
+      )}
     </div>
   );
 };
