@@ -144,7 +144,9 @@ const CardGame = () => {
               whileHover={{ scale: flippedCards[index] ? 1.02 : 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`relative aspect-[3/4] w-full max-w-[180px] md:max-w-[200px] lg:max-w-none lg:h-64 rounded-2xl shadow-xl cursor-pointer overflow-hidden ${
-                flippedCards[index] ? "bg-white" : currentSegment.color
+                flippedCards[index]
+                  ? currentSegment.color
+                  : currentSegment.color
               }`}
             >
               <AnimatePresence>
@@ -156,7 +158,7 @@ const CardGame = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute inset-0 flex flex-col items-center justify-center p-4"
                   >
-                    <div className="absolute inset-0 bg-white/10 rounded-xl border-2 border-white/20"></div>
+                    {/* <div className="absolute inset-0 bg-white/10 rounded-lg border-2 border-white/20"></div> */}
                     <div className="relative z-10 flex flex-col items-center">
                       {currentSegment.icon}
                       <span className="mt-4 text-white font-bold text-xl">
@@ -174,56 +176,31 @@ const CardGame = () => {
                     initial={{ rotateY: 90 }}
                     animate={{ rotateY: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute inset-0 p-5 flex flex-col items-center justify-between bg-white"
+                    className="absolute inset-0 p-3 flex flex-col items-center justify-between"
                   >
                     <div className="w-full flex justify-between items-start">
-                      <span
-                        className={`text-sm font-semibold ${currentSegment.textColor}`}
-                      >
+                      <span className={`text-xs font-semibold text-white`}>
                         {currentSegment.title}
                       </span>
-                      <span className="text-xs text-gray-500">#{card.id}</span>
+                      <span className="text-xs text-white">#{card.id}</span>
                     </div>
 
                     <div className="flex-1 flex flex-col items-center justify-center text-center">
-                      <h3 className="text-lg font-bold text-gray-800 mb-2">
+                      <h3 className="text-lg md:text-xl font-bold text-white mb-2">
                         {card.content}
                       </h3>
-                      <p className="text-sm text-gray-600">{card.details}</p>
+                      <p className="text-xs md:text-sm text-white">
+                        {card.details}
+                      </p>
                     </div>
 
                     <div className="w-full flex justify-center">
                       <span
-                        className={`text-xs px-3 py-1 rounded-full ${currentSegment.color} text-white`}
+                        className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold`}
                       >
                         Challenge Card
                       </span>
                     </div>
-
-                    <div
-                      className={`absolute top-1 left-1 w-6 h-6 border-t-2 border-l-2 ${currentSegment.color.replace(
-                        "bg",
-                        "border"
-                      )} rounded-tl-lg`}
-                    ></div>
-                    <div
-                      className={`absolute top-1 right-1 w-6 h-6 border-t-2 border-r-2 ${currentSegment.color.replace(
-                        "bg",
-                        "border"
-                      )} rounded-tr-lg`}
-                    ></div>
-                    <div
-                      className={`absolute bottom-1 left-1 w-6 h-6 border-b-2 border-l-2 ${currentSegment.color.replace(
-                        "bg",
-                        "border"
-                      )} rounded-bl-lg`}
-                    ></div>
-                    <div
-                      className={`absolute bottom-1 right-1 w-6 h-6 border-b-2 border-r-2 ${currentSegment.color.replace(
-                        "bg",
-                        "border"
-                      )} rounded-br-lg`}
-                    ></div>
                   </motion.div>
                 )}
               </AnimatePresence>
