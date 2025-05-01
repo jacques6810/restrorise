@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
+import "../App.css";
 
 import { FaRegComment } from "react-icons/fa"; // For Truth
 import { FaRegGrinTongueWink } from "react-icons/fa"; // For Dare

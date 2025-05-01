@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { path } from "framer-motion/client";
+import "../App.css";
 
 const Home = () => {
   const [isSpinning, setIsSpinning] = useState(false);
@@ -190,7 +191,7 @@ const Home = () => {
           />
           <h1 className="text-3xl md:text-4xl font-bold text-white relative z-10">
             <span className="inline-block mr-2">🎡</span>
-            RESTRORISE
+            RESPRORISE
             <span className="inline-block ml-2">🎲</span>
           </h1>
           <p className="text-white/80 mt-2 relative z-10">
@@ -314,7 +315,7 @@ const Home = () => {
                         Hasil Putaran:
                       </h3>
                       <div
-                        className={`text-3xl font-bold ${result.textColor} flex items-center gap-3`}
+                        className={`text-2xl md:text-3xl font-bold ${result.textColor} flex items-center gap-3`}
                       >
                         <span className="text-2xl ">
                           {result.label === "T" && "🤔"}
@@ -624,7 +625,7 @@ const Home = () => {
         transition={{ delay: 0.5 }}
         className="mt-8 text-center text-gray-500 text-sm"
       >
-        © {new Date().getFullYear()} Restrorise. All fun reserved.
+        © {new Date().getFullYear()} Resprorise. All fun reserved.
       </motion.footer>
     </div>
   );
