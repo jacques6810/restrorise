@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { path } from "framer-motion/client";
+import { nav, path } from "framer-motion/client";
 import "../App.css";
 
 const Home = () => {
@@ -455,8 +455,8 @@ const Home = () => {
             )}
 
             {/* Button to show guide */}
-            {/* <motion.button
-              onClick={() => setShowGuide(true)}
+            <motion.button
+              onClick={() => navigate("/guide")}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               className="w-full py-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 font-medium transition-colors flex items-center justify-center gap-2"
@@ -476,7 +476,7 @@ const Home = () => {
                 />
               </svg>
               Panduan Permainan
-            </motion.button> */}
+            </motion.button>
           </div>
         </div>
       </motion.div>
