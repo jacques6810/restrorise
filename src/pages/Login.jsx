@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import logoFkip from "../assets/logo-fkip.png";
 import logoUksw from "../assets/logo-uksw.png";
+import { useAuth } from "./authContext";
 
 const Login = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [loginError, setLoginError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
@@ -19,13 +22,13 @@ const Login = () => {
       ...formData,
       [name]: value,
     });
-    // Clear error when user types
     if (errors[name]) {
       setErrors({
         ...errors,
         [name]: null,
       });
     }
+    setLoginError("");
   };
 
   const validate = () => {
@@ -35,7 +38,7 @@ const Login = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -44,11 +47,16 @@ const Login = () => {
     }
 
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const isLoggedIn = await login(formData.username, formData.password);
+      if (isLoggedIn) {
+        navigate("/guide");
+      } else {
+        setLoginError("Invalid username or password");
+      }
+    } finally {
       setIsSubmitting(false);
-      navigate("/guide");
-    }, 1000);
+    }
   };
 
   return (
@@ -150,6 +158,17 @@ const Login = () => {
               )}
             </div>
           </div>
+
+          {/* Add this error message below your password field */}
+          {loginError && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="mb-4 p-2 bg-red-100 text-red-700 rounded text-center text-sm"
+            >
+              {loginError}
+            </motion.div>
+          )}
 
           {/* Submit Button */}
           <motion.button
