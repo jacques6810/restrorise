@@ -189,7 +189,7 @@ const Home = () => {
               ease: "linear",
             }}
           />
-          <h1 className="text-3xl md:text-4xl font-bold text-white relative z-10">
+          <h1 className="text-2xl md:text-4xl font-bold text-white relative z-10">
             <span className="inline-block mr-2">🎡</span>
             RESPRORISE
             <span className="inline-block ml-2">🎲</span>
@@ -199,7 +199,7 @@ const Home = () => {
           </p>
         </div>
 
-        <div className="p-6 md:p-8 flex flex-col lg:flex-row items-center gap-8">
+        <div className="p-6 md:p-8 flex flex-col lg:flex-col items-center gap-8">
           {/* Wheel Section */}
           <div className="flex-1 flex flex-col items-center">
             <div className="relative w-64 h-64 md:w-80 md:h-80 mb-8">
@@ -382,7 +382,6 @@ const Home = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-
             {/* Removed Segments Panel */}
             {removedSegments.length > 0 && (
               <motion.div
@@ -455,7 +454,8 @@ const Home = () => {
               </motion.div>
             )}
 
-            <motion.button
+            {/* Button to show guide */}
+            {/* <motion.button
               onClick={() => setShowGuide(true)}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -476,7 +476,7 @@ const Home = () => {
                 />
               </svg>
               Panduan Permainan
-            </motion.button>
+            </motion.button> */}
           </div>
         </div>
       </motion.div>

@@ -92,7 +92,7 @@ const CardGame = () => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
-    setShuffledCards([...currentSegment.cards].sort(() => Math.random() - 0.5));
+    setShuffledCards([...currentSegment.cards]);
   }, [segment]);
 
   const handleCardClick = (index) => {
@@ -103,7 +103,7 @@ const CardGame = () => {
 
   const resetCards = () => {
     setFlippedCards(Array(10).fill(false));
-    setShuffledCards([...currentSegment.cards].sort(() => Math.random() - 0.5));
+    setShuffledCards([...currentSegment.cards]);
   };
 
   return (
@@ -173,7 +173,7 @@ const CardGame = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/spin")}
                 className="px-4 py-2 bg-white bg-opacity-90 rounded-xl font-medium shadow-lg hover:bg-opacity-100 transition flex items-center justify-center gap-2 border border-gray-200"
               >
                 <svg
@@ -224,6 +224,10 @@ const CardGame = () => {
                   >
                     {/* <div className="absolute inset-0 bg-white/10 rounded-lg border-2 border-white/20"></div> */}
                     <div className="relative z-10 flex flex-col items-center">
+                      <span className="mt-4 mb-2 text-white font-bold text-2xl">
+                        {/* {index + 1} */}
+                        {card.id}
+                      </span>
                       {currentSegment.icon}
                       <span className="mt-4 text-white font-bold text-xl">
                         {currentSegment.title}
