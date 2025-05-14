@@ -6,8 +6,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const validCredentials = {
-    username: "guru",
-    password: "edukasi2025",
+    username: "resproriseedukasi",
+    password: "layanankonselingbk2025",
   };
 
   const login = (username, password) => {
