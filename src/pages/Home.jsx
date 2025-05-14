@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import logoDSI from "../assets/DSI Logo.png";
 import { nav, path } from "framer-motion/client";
 import "../App.css";
 
@@ -176,27 +177,139 @@ const Home = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-5xl bg-white/80 backdrop-blur-lg rounded-3xl shadow-xl overflow-hidden border border-white/20"
       >
-        {/* Header */}
-        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-center relative overflow-hidden">
+        {/* Header Section with Enhanced Design */}
+        <div className="relative bg-gradient-to-br from-purple-600 to-indigo-700 p-8 text-center overflow-hidden">
+          {/* Decorative Elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-purple-500 rounded-full filter blur-3xl opacity-20 mix-blend-overlay"></div>
+            <div className="absolute bottom-0 right-0 w-40 h-40 bg-indigo-500 rounded-full filter blur-3xl opacity-20 mix-blend-overlay"></div>
+            <div className="absolute top-1/4 right-1/4 w-24 h-24 bg-pink-400 rounded-full filter blur-3xl opacity-15 mix-blend-overlay"></div>
+          </div>
+
+          {/* Logo with Floating Animation */}
           <motion.div
-            className="absolute inset-0 bg-white/10"
-            animate={{
-              x: ["-100%", "100%"],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-          <h1 className="text-2xl md:text-4xl font-bold text-white relative z-10">
-            <span className="inline-block mr-2">🎡</span>
-            RESPRORISE
-            <span className="inline-block ml-2">🎲</span>
-          </h1>
-          <p className="text-white/80 mt-2 relative z-10">
-            Putar roda untuk mendapatkan tantangan!
-          </p>
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+            className="relative z-10"
+          >
+            <motion.div
+              animate={{
+                y: [0, -10, 0],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="inline-block mb-6"
+            >
+              <img
+                src={logoDSI}
+                alt="DSI Logo"
+                className="h-24 w-auto drop-shadow-lg bg-white rounded-full p-2 border-4 border-white/20"
+                style={{
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                }}
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Title with Animated Emojis */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="relative z-10"
+          >
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <motion.span
+                animate={{
+                  rotate: [0, 15, -15, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+                className="inline-block mr-3"
+              >
+                🎡
+              </motion.span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-100 to-white">
+                RESPRORISE
+              </span>
+              <motion.span
+                animate={{
+                  rotate: [0, -15, 15, 0],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 0.5,
+                }}
+                className="inline-block ml-3"
+              >
+                🎲
+              </motion.span>
+            </h1>
+
+            {/* Subtitle with Floating Dots */}
+            <div className="relative inline-block">
+              <p className="text-white/90 mt-2 text-lg md:text-xl relative z-10">
+                Putar roda untuk tantangan seru!
+              </p>
+              <motion.div
+                animate={{
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                }}
+                className="absolute -bottom-2 -left-4 w-2 h-2 bg-yellow-300 rounded-full"
+              ></motion.div>
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: 0.5,
+                }}
+                className="absolute -top-2 -right-4 w-3 h-3 bg-pink-300 rounded-full"
+              ></motion.div>
+            </div>
+          </motion.div>
+
+          {/* Animated Confetti Elements */}
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{
+                opacity: [0, 1, 0],
+                y: [0, -50],
+                x: Math.random() * 100 - 50,
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                delay: i * 0.3,
+              }}
+              className={`absolute w-2 h-2 rounded-full ${
+                ["bg-yellow-300", "bg-pink-300", "bg-white", "bg-purple-300"][
+                  i % 4
+                ]
+              }`}
+              style={{
+                top: `${Math.random() * 30 + 10}%`,
+                left: `${Math.random() * 100}%`,
+              }}
+            ></motion.div>
+          ))}
         </div>
 
         <div className="p-6 md:p-8 flex flex-col lg:flex-col items-center gap-8">

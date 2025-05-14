@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import logoFkip from "../assets/logo-fkip.png";
 import logoUksw from "../assets/logo-uksw.png";
+import logoDSI from "../assets/DSI Logo.png";
 import { useAuth } from "./authContext";
 
 const Login = () => {
@@ -73,6 +74,14 @@ const Login = () => {
             src={logoUksw}
             alt="UKSW Logo"
             className="h-16 object-contain"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          />
+          <motion.img
+            src={logoDSI}
+            alt="DSI Logo"
+            className="h-22 object-contain"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
