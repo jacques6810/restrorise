@@ -3,7 +3,7 @@ import { useAuth } from "../pages/authContext";
 
 const ProtectedRoute = () => {
   const { user } = useAuth();
-  console.log("ProtectedRoute user:", user);
+  //   console.log("ProtectedRoute user:", user);
   // const isAuthenticated = user || localStorage.getItem("isAuthenticated");
   const isAuthenticated = !!user; // Hanya cek state
 

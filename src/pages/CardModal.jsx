@@ -29,22 +29,36 @@ const CardModal = ({ card, segment, onClose }) => {
 
             {/* Main content */}
             <div className="flex-1 flex flex-col items-center justify-center text-center">
-              <motion.div
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.2 }}
-                className="mb-8"
-              >
-                {React.cloneElement(segment.icon, {
-                  className: "text-8xl text-white opacity-90",
-                })}
-              </motion.div>
+              {segment.title !== "Gambar" && (
+                <motion.div
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="mb-8"
+                >
+                  {React.cloneElement(segment.icon, {
+                    className: "text-8xl text-white opacity-90",
+                  })}
+                </motion.div>
+              )}
 
-              <h3 className="text-2xl font-bold text-white mb-4">
-                {card.content}
-              </h3>
+              {segment.title !== "Gambar" && (
+                <h3 className="text-3xl font-bold text-white mb-4">
+                  {card.content}
+                </h3>
+              )}
 
-              <p className="text-white text-opacity-90 mb-6">{card.details}</p>
+              {segment.title === "Gambar" ? (
+                <img
+                  src={card.image}
+                  alt={card.content}
+                  className="max-w-80 max-h-80 object-contain rounded-lg shadow-md bg-white mb-6"
+                />
+              ) : (
+                <p className="text-white text-lg text-opacity-90 mb-6">
+                  {card.details}
+                </p>
+              )}
             </div>
 
             {/* Footer */}

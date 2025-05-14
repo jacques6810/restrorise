@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Guide from "./pages/Guide";
 import CardGame from "./pages/CardGame";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/*" element={<NotFound />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/guide" element={<Guide />} />

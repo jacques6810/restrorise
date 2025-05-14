@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
 import CardModal from "./CardModal";
+import {
+  truthQuestions,
+  dareQuestions,
+  siapaAkuQuestions,
+  hotsQuestions,
+  gambarSegments,
+} from "../gameData";
 import "../App.css";
 
 import { FaRegComment } from "react-icons/fa"; // For Truth
@@ -17,13 +24,11 @@ const segmentData = {
     hoverColor: "hover:bg-red-600",
     textColor: "text-red-500",
     icon: <FaRegComment className="text-6xl text-white opacity-80" />,
-    cards: Array(10)
-      .fill()
-      .map((_, i) => ({
-        id: i + 1,
-        content: `Truth Question ${i + 1}`,
-        details: "Answer honestly or face consequences!",
-      })),
+    cards: truthQuestions.map((q, i) => ({
+      id: i + 1,
+      content: "Truth Challenge " + (i + 1),
+      details: q,
+    })),
   },
   dare: {
     title: "Dare",
@@ -31,13 +36,11 @@ const segmentData = {
     hoverColor: "hover:bg-blue-600",
     textColor: "text-blue-500",
     icon: <GiOpenBook className="text-6xl text-white opacity-80" />,
-    cards: Array(10)
-      .fill()
-      .map((_, i) => ({
-        id: i + 1,
-        content: `Dare Challenge ${i + 1}`,
-        details: "Complete this challenge or take a penalty!",
-      })),
+    cards: dareQuestions.map((q, i) => ({
+      id: i + 1,
+      content: "Dare Challenge " + (i + 1),
+      details: q,
+    })),
   },
   "siapa-aku": {
     title: "Siapa Aku?",
@@ -45,13 +48,11 @@ const segmentData = {
     hoverColor: "hover:bg-green-600",
     textColor: "text-green-500",
     icon: <FaUsers className="text-6xl text-white opacity-80" />,
-    cards: Array(10)
-      .fill()
-      .map((_, i) => ({
-        id: i + 1,
-        content: `Siapa Aku Question ${i + 1}`,
-        details: "Guess who this is about!",
-      })),
+    cards: siapaAkuQuestions.map((q, i) => ({
+      id: i + 1,
+      content: "Siapa Aku Challenge " + (i + 1),
+      details: q,
+    })),
   },
   gambar: {
     title: "Gambar",
@@ -59,13 +60,11 @@ const segmentData = {
     hoverColor: "hover:bg-yellow-600",
     textColor: "text-yellow-500",
     icon: <FaImage className="text-6xl text-white opacity-80" />,
-    cards: Array(10)
-      .fill()
-      .map((_, i) => ({
-        id: i + 1,
-        content: `Gambar Challenge ${i + 1}`,
-        details: "Draw or describe this image!",
-      })),
+    cards: gambarSegments.map((g, i) => ({
+      id: i + 1,
+      content: g.title,
+      image: g.image,
+    })),
   },
   hots: {
     title: "Hots",
@@ -73,13 +72,11 @@ const segmentData = {
     hoverColor: "hover:bg-purple-600",
     textColor: "text-purple-500",
     icon: <FaFire className="text-6xl text-white opacity-80" />,
-    cards: Array(10)
-      .fill()
-      .map((_, i) => ({
-        id: i + 1,
-        content: `Hot Challenge ${i + 1}`,
-        details: "This one's spicy - good luck!",
-      })),
+    cards: hotsQuestions.map((q, i) => ({
+      id: i + 1,
+      content: "Hots Challenge " + (i + 1),
+      details: q,
+    })),
   },
 };
 
@@ -253,17 +250,26 @@ const CardGame = () => {
                       <span className="text-xs text-white">#{card.id}</span>
                     </div>
 
-                    <div className="flex-1 flex flex-col items-center justify-center text-center">
-                      <h3 className="text-lg md:text-xl font-bold text-white mb-2">
-                        {card.content}
-                      </h3>
-                      <p className="text-xs md:text-sm text-white">
-                        {card.details}
-                      </p>
+                    <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
+                      {segment !== "gambar" && (
+                        <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                          {card.content}
+                        </h3>
+                      )}
+                      {segment === "gambar" ? (
+                        <img
+                          src={card.image}
+                          alt={card.content}
+                          className="max-w-30 max-h-30 object-contain rounded-lg shadow-md bg-white"
+                        />
+                      ) : (
+                        <p className="text-xs md:text-sm text-white line-clamp-3">
+                          {card.details}
+                        </p>
+                      )}
                     </div>
 
                     <div className="w-full flex justify-center">
-                      {/* Inside the flipped card section (where the "See Your Card" button is) */}
                       <span
                         onClick={(e) => {
                           e.stopPropagation();

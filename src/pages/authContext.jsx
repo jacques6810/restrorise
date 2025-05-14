@@ -5,10 +5,9 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Hardcoded credentials (for demo only)
   const validCredentials = {
-    username: "admin",
-    password: "password123",
+    username: "guru",
+    password: "edukasi2025",
   };
 
   const login = (username, password) => {
