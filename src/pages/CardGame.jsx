@@ -6,6 +6,7 @@ import {
   truthQuestions,
   dareQuestions,
   siapaAkuQuestions,
+  siapaAkuAnswers,
   hotsQuestions,
   gambarSegments,
 } from "../gameData";
@@ -52,6 +53,7 @@ const segmentData = {
       id: i + 1,
       content: "Siapa Aku Challenge " + (i + 1),
       details: q,
+      answer: siapaAkuAnswers[i],
     })),
   },
   gambar: {
@@ -164,7 +166,7 @@ const CardGame = () => {
                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                   />
                 </svg>
-                Shuffle Cards
+                Reset Cards
               </motion.button>
 
               <motion.button

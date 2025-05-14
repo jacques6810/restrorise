@@ -61,6 +61,19 @@ export const siapaAkuQuestions = [
   "Aku adalah sebuah proses runtuhnya dinding rahim, umumnya aku datang setiap sebulan sekali, siapakah aku?",
 ];
 
+export const siapaAkuAnswers = [
+  "pembalut",
+  "rahim",
+  "ovarium",
+  "tuba falopi",
+  "pil tambah darah",
+  "serviks",
+  "jakun",
+  "payudara",
+  "sperma",
+  "menstruasi",
+];
+
 export const gambarSegments = [
   {
     id: 1,

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const CardModal = ({ card, segment, onClose }) => {
+  const [showAnswer, setShowAnswer] = useState(false);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -55,9 +57,36 @@ const CardModal = ({ card, segment, onClose }) => {
                   className="max-w-80 max-h-80 object-contain rounded-lg shadow-md bg-white mb-6"
                 />
               ) : (
-                <p className="text-white text-lg text-opacity-90 mb-6">
-                  {card.details}
-                </p>
+                <>
+                  <p className="text-white text-lg text-opacity-90 mb-6">
+                    {card.details}
+                  </p>
+                  {segment.title === "Siapa Aku?" && (
+                    <div className="w-full flex flex-col items-center">
+                      {!showAnswer ? (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => setShowAnswer(true)}
+                          className="px-6 py-2 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-full font-semibold shadow-lg mb-4 transition"
+                        >
+                          Reveal Answer
+                        </motion.button>
+                      ) : (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => setShowAnswer(false)}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="text-white font-semibold text-lg text-opacity-90 mb-6 px-4 py-2 rounded-xl"
+                        >
+                          Answer: {card.answer}
+                        </motion.button>
+                      )}
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
