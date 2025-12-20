@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
 
   const validCredentials = {
     username: "resproriseedukasi",
-    password: "layanankonselingbk2025",
+    password: "SID2026",
   };
 
   const login = (username, password) => {
