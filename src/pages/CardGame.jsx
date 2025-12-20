@@ -82,6 +82,15 @@ const segmentData = {
   },
 };
 
+const shuffleCards = (cards) => {
+  const shuffled = [...cards];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const CardGame = () => {
   const { segment } = useParams();
   const navigate = useNavigate();
@@ -91,7 +100,8 @@ const CardGame = () => {
   const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
-    setShuffledCards([...currentSegment.cards]);
+    setShuffledCards(shuffleCards(currentSegment.cards));
+    setFlippedCards(Array(currentSegment.cards.length).fill(false));
   }, [segment]);
 
   const handleCardClick = (index) => {
@@ -101,8 +111,8 @@ const CardGame = () => {
   };
 
   const resetCards = () => {
-    setFlippedCards(Array(10).fill(false));
-    setShuffledCards([...currentSegment.cards]);
+    setFlippedCards(Array(currentSegment.cards.length).fill(false));
+    setShuffledCards(shuffleCards(currentSegment.cards));
   };
 
   return (
@@ -197,7 +207,9 @@ const CardGame = () => {
 
         {/* Cards Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 justify-items-center">
-          {shuffledCards.map((card, index) => (
+          {shuffledCards.map((card, index) => {
+            const displayNumber = index + 1;
+            return (
             <motion.div
               key={card.id}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -225,7 +237,7 @@ const CardGame = () => {
                     <div className="relative z-10 flex flex-col items-center">
                       <span className="mt-4 mb-2 text-white font-bold text-2xl">
                         {/* {index + 1} */}
-                        {card.id}
+                        {displayNumber}
                       </span>
                       {currentSegment.icon}
                       <span className="mt-4 text-white font-bold text-xl">
@@ -249,7 +261,7 @@ const CardGame = () => {
                       <span className={`text-xs font-semibold text-white`}>
                         {currentSegment.title}
                       </span>
-                      <span className="text-xs text-white">#{card.id}</span>
+                      <span className="text-xs text-white">#{displayNumber}</span>
                     </div>
 
                     <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
@@ -286,7 +298,8 @@ const CardGame = () => {
                 )}
               </AnimatePresence>
             </motion.div>
-          ))}
+          );
+          })}
         </div>
 
         <motion.div
@@ -334,7 +347,7 @@ const CardGame = () => {
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 const allFlipped = flippedCards.every(Boolean);
-                setFlippedCards(Array(10).fill(!allFlipped));
+                setFlippedCards(Array(shuffledCards.length).fill(!allFlipped));
               }}
               className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
                 flippedCards.every(Boolean)
