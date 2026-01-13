@@ -210,95 +210,97 @@ const CardGame = () => {
           {shuffledCards.map((card, index) => {
             const displayNumber = index + 1;
             return (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05 }}
-              onClick={() => handleCardClick(index)}
-              whileHover={{ scale: flippedCards[index] ? 1.02 : 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`relative aspect-[3/4] w-full max-w-[180px] md:max-w-[200px] lg:max-w-none lg:h-64 rounded-2xl shadow-xl cursor-pointer overflow-hidden ${
-                flippedCards[index]
-                  ? currentSegment.color
-                  : currentSegment.color
-              }`}
-            >
-              <AnimatePresence>
-                {!flippedCards[index] ? (
-                  <motion.div
-                    key="front"
-                    initial={{ rotateY: 0 }}
-                    exit={{ rotateY: 90 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex flex-col items-center justify-center p-4"
-                  >
-                    {/* <div className="absolute inset-0 bg-white/10 rounded-lg border-2 border-white/20"></div> */}
-                    <div className="relative z-10 flex flex-col items-center">
-                      <span className="mt-4 mb-2 text-white font-bold text-2xl">
-                        {/* {index + 1} */}
-                        {displayNumber}
-                      </span>
-                      {currentSegment.icon}
-                      <span className="mt-4 text-white font-bold text-xl">
-                        {currentSegment.title}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 opacity-20">
-                      <div className="absolute top-2 left-2 w-8 h-8 rounded-full bg-white"></div>
-                      <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white"></div>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="back"
-                    initial={{ rotateY: 90 }}
-                    animate={{ rotateY: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0 p-3 flex flex-col items-center justify-between"
-                  >
-                    <div className="w-full flex justify-between items-start">
-                      <span className={`text-xs font-semibold text-white`}>
-                        {currentSegment.title}
-                      </span>
-                      <span className="text-xs text-white">#{displayNumber}</span>
-                    </div>
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
+                onClick={() => handleCardClick(index)}
+                whileHover={{ scale: flippedCards[index] ? 1.02 : 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`relative aspect-[3/4] w-full max-w-[180px] md:max-w-[200px] lg:max-w-none lg:h-64 rounded-2xl shadow-xl cursor-pointer overflow-hidden ${
+                  flippedCards[index]
+                    ? currentSegment.color
+                    : currentSegment.color
+                }`}
+              >
+                <AnimatePresence>
+                  {!flippedCards[index] ? (
+                    <motion.div
+                      key="front"
+                      initial={{ rotateY: 0 }}
+                      exit={{ rotateY: 90 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 flex flex-col items-center justify-center p-4"
+                    >
+                      {/* <div className="absolute inset-0 bg-white/10 rounded-lg border-2 border-white/20"></div> */}
+                      <div className="relative z-10 flex flex-col items-center">
+                        <span className="mt-4 mb-2 text-white font-bold text-2xl">
+                          {/* {index + 1} */}
+                          {displayNumber}
+                        </span>
+                        {currentSegment.icon}
+                        <span className="mt-4 text-white font-bold text-xl">
+                          {currentSegment.title}
+                        </span>
+                      </div>
+                      <div className="absolute inset-0 opacity-20">
+                        <div className="absolute top-2 left-2 w-8 h-8 rounded-full bg-white"></div>
+                        <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white"></div>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="back"
+                      initial={{ rotateY: 90 }}
+                      animate={{ rotateY: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 p-3 flex flex-col items-center justify-between"
+                    >
+                      <div className="w-full flex justify-between items-start">
+                        <span className={`text-xs font-semibold text-white`}>
+                          {currentSegment.title}
+                        </span>
+                        <span className="text-xs text-white">
+                          #{displayNumber}
+                        </span>
+                      </div>
 
-                    <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
-                      {segment !== "gambar" && (
-                        <h3 className="text-lg md:text-xl font-bold text-white mb-2">
-                          {card.content}
-                        </h3>
-                      )}
-                      {segment === "gambar" ? (
-                        <img
-                          src={card.image}
-                          alt={card.content}
-                          className="max-w-30 max-h-30 object-contain rounded-lg shadow-md bg-white"
-                        />
-                      ) : (
-                        <p className="text-xs md:text-sm text-white line-clamp-3">
-                          {card.details}
-                        </p>
-                      )}
-                    </div>
+                      <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
+                        {segment !== "gambar" && (
+                          <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                            {card.content}
+                          </h3>
+                        )}
+                        {segment === "gambar" ? (
+                          <img
+                            src={card.image}
+                            alt={card.content}
+                            className="max-w-30 max-h-30 object-contain rounded-lg shadow-md bg-white"
+                          />
+                        ) : (
+                          <p className="text-xs md:text-sm text-white line-clamp-3">
+                            {card.details}
+                          </p>
+                        )}
+                      </div>
 
-                    <div className="w-full flex justify-center">
-                      <span
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedCard(card);
-                        }}
-                        className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold cursor-pointer hover:shadow-md transition`}
-                      >
-                        See Your Card
-                      </span>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          );
+                      <div className="w-full flex justify-center">
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedCard(card);
+                          }}
+                          className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold cursor-pointer hover:shadow-md transition`}
+                        >
+                          See Your Card
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
           })}
         </div>
 
