@@ -96,23 +96,73 @@ const CardGame = () => {
   const navigate = useNavigate();
   const [flippedCards, setFlippedCards] = useState(Array(10).fill(false));
   const [shuffledCards, setShuffledCards] = useState([]);
+  const [isShuffleEnabled, setIsShuffleEnabled] = useState(true);
+  const [isBlockingEnabled, setIsBlockingEnabled] = useState(false);
+  const [blockedCards, setBlockedCards] = useState(new Set());
   const currentSegment = segmentData[segment] || segmentData.truth;
   const [selectedCard, setSelectedCard] = useState(null);
 
+  // Load blocked cards from localStorage on mount and segment change
   useEffect(() => {
-    setShuffledCards(shuffleCards(currentSegment.cards));
+    if (isBlockingEnabled) {
+      const saved = localStorage.getItem(`blockedCards_${segment}`);
+      if (saved) {
+        setBlockedCards(new Set(JSON.parse(saved)));
+      } else {
+        setBlockedCards(new Set());
+      }
+    } else {
+      setBlockedCards(new Set());
+    }
     setFlippedCards(Array(currentSegment.cards.length).fill(false));
-  }, [segment]);
+  }, [segment, isBlockingEnabled]);
+
+  useEffect(() => {
+    const initialCards = isShuffleEnabled
+      ? shuffleCards(currentSegment.cards)
+      : currentSegment.cards;
+    setShuffledCards(initialCards);
+  }, [isShuffleEnabled]);
 
   const handleCardClick = (index) => {
+    // Check if card is blocked
+    if (isBlockingEnabled && blockedCards.has(shuffledCards[index].id)) {
+      return; // Don't allow clicking blocked cards
+    }
     const newFlippedCards = [...flippedCards];
     newFlippedCards[index] = !newFlippedCards[index];
     setFlippedCards(newFlippedCards);
   };
 
+  const handleSeeYourCard = (card) => {
+    if (isBlockingEnabled) {
+      const newBlockedCards = new Set(blockedCards);
+      newBlockedCards.add(card.id);
+      setBlockedCards(newBlockedCards);
+      // Save to localStorage
+      localStorage.setItem(
+        `blockedCards_${segment}`,
+        JSON.stringify(Array.from(newBlockedCards))
+      );
+    }
+    setSelectedCard(card);
+  };
+
+  const handleToggleBlocking = () => {
+    if (isBlockingEnabled) {
+      // Turning OFF - clear blocked cards from localStorage
+      localStorage.removeItem(`blockedCards_${segment}`);
+      setBlockedCards(new Set());
+    }
+    setIsBlockingEnabled(!isBlockingEnabled);
+  };
+
   const resetCards = () => {
     setFlippedCards(Array(currentSegment.cards.length).fill(false));
-    setShuffledCards(shuffleCards(currentSegment.cards));
+    const cardsToDisplay = isShuffleEnabled
+      ? shuffleCards(currentSegment.cards)
+      : currentSegment.cards;
+    setShuffledCards(cardsToDisplay);
   };
 
   return (
@@ -209,6 +259,7 @@ const CardGame = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 justify-items-center">
           {shuffledCards.map((card, index) => {
             const displayNumber = index + 1;
+            const isBlocked = isBlockingEnabled && blockedCards.has(card.id);
             return (
               <motion.div
                 key={card.id}
@@ -216,10 +267,16 @@ const CardGame = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.05 }}
                 onClick={() => handleCardClick(index)}
-                whileHover={{ scale: flippedCards[index] ? 1.02 : 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`relative aspect-[3/4] w-full max-w-[180px] md:max-w-[200px] lg:max-w-none lg:h-64 rounded-2xl shadow-xl cursor-pointer overflow-hidden ${
-                  flippedCards[index]
+                whileHover={{
+                  scale: isBlocked ? 1 : flippedCards[index] ? 1.02 : 1.05,
+                }}
+                whileTap={{ scale: isBlocked ? 1 : 0.95 }}
+                className={`relative aspect-[3/4] w-full max-w-[180px] md:max-w-[200px] lg:max-w-none lg:h-64 rounded-2xl shadow-xl overflow-hidden transition ${
+                  isBlocked ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+                } ${
+                  isBlocked
+                    ? "bg-gray-400"
+                    : flippedCards[index]
                     ? currentSegment.color
                     : currentSegment.color
                 }`}
@@ -239,9 +296,20 @@ const CardGame = () => {
                           {/* {index + 1} */}
                           {displayNumber}
                         </span>
-                        {currentSegment.icon}
+                        {!isBlocked ? (
+                          currentSegment.icon
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="text-6xl text-white opacity-80"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zm-1 16.5h2v2h-2v-2zm0-12h2v10h-2V5.5z" />
+                          </svg>
+                        )}
                         <span className="mt-4 text-white font-bold text-xl">
-                          {currentSegment.title}
+                          {isBlocked ? "Used" : currentSegment.title}
                         </span>
                       </div>
                       <div className="absolute inset-0 opacity-20">
@@ -289,7 +357,7 @@ const CardGame = () => {
                         <span
                           onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedCard(card);
+                            handleSeeYourCard(card);
                           }}
                           className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold cursor-pointer hover:shadow-md transition`}
                         >
@@ -344,39 +412,99 @@ const CardGame = () => {
               </div>
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                const allFlipped = flippedCards.every(Boolean);
-                setFlippedCards(Array(shuffledCards.length).fill(!allFlipped));
-              }}
-              className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
-                flippedCards.every(Boolean)
-                  ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
-                  : `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div className="flex gap-3 flex-wrap">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setIsShuffleEnabled(!isShuffleEnabled)}
+                className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
+                  isShuffleEnabled
+                    ? `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
+                    : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d={
-                    flippedCards.every(Boolean)
-                      ? "M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                      : "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  }
-                />
-              </svg>
-              {flippedCards.every(Boolean) ? "Flip All Back" : "Flip All Cards"}
-            </motion.button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                Random {isShuffleEnabled ? "ON" : "OFF"}
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleToggleBlocking}
+                className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
+                  isBlockingEnabled
+                    ? `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
+                    : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  />
+                </svg>
+                Block {isBlockingEnabled ? "ON" : "OFF"}
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  const allFlipped = flippedCards.every(Boolean);
+                  setFlippedCards(
+                    Array(shuffledCards.length).fill(!allFlipped)
+                  );
+                }}
+                className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
+                  flippedCards.every(Boolean)
+                    ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                    : `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d={
+                      flippedCards.every(Boolean)
+                        ? "M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                        : "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    }
+                  />
+                </svg>
+                {flippedCards.every(Boolean)
+                  ? "Flip All Back"
+                  : "Flip All Cards"}
+              </motion.button>
+            </div>
           </div>
 
           {/* Progress bar */}
