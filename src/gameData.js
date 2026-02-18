@@ -10,42 +10,57 @@ import Sifilis from "./assets/gambarSegments/sifilis.jpeg";
 import Uterus from "./assets/gambarSegments/uterus.jpg";
 
 export const truthQuestions = [
-  "Dalam sehari berapa kali kamu mengganti celana dalam?",
-  "Bagaimana caramu menjaga kebersihan kemaluanmu?",
-  "Apa saja keluhanmu ketika menstruasi?",
-  "Apakah kamu sudah mengalami mimpi basah?",
-  "Apakah kamu memiliki ketertarikan atau suka dengan lawan jenis?",
+  "Dalam sehari berapa kali kamu mengganti celana dalammu dan kenapa?",
+  "Bagaimana caramu menjaga kebersihan kemaluanmu sehari-hari?",
+  "Apa saja keluhanmu ketika menstruasi dan bagaimana caramu mengatasinya?",
+  "Jika kamu laki-laki apakah sudah mengalami mimpi basah, lalu menurutmu apakah mimpi basah itu normal berikan alasannya?",
+  "Apakah kamu memiliki ketertarikan atau suka dengan lawan jenis dan bagaimana kamu mengekspresikannya?",
   "Bagaimana siklus menstruasimu, apakah teratur?",
+  "Bagaimana menurutmu berita hoaks tentang kesehatan reproduksi di internet?",
   "Apakah kamu mengalami keputihan, seperti bau berlebihan dan rasa gatal?",
-  "Dalam sehari berapa kali kamu mengganti pembalut?",
+  "Dalam sehari berapa kali kamu mengganti pembalut dan kenapa kamu melakukannya?",
   "Apakah kamu pernah bercerita kepada orang tua terkait kesehatan reproduksi?",
-  "Apakah kamu pernah melihat seseorang memiliki ketertarikan dengan sesama jenis?",
+  "Apakah kamu pernah melihat seseorang memiliki ketertarikan dengan sesama jenis, dan bagaimana pendapatmu?",
+  "Bagaimana caramu memilih pakaian dalam yang nyaman untuk sehari-hari, dan alasannya?",
+  "Apa keselahan kecil yang masih sering atau pernah kamu lakukan untuk kebersihan reproduksi, dan apa alasannya?",
+  "Pernahkan kamu merasa tidak nyaman pada area kemaluanmu, tetapi kamu memilih diam? Berikan alasannya.",
+  "Apa yang ada dipikiranmu ketika mendengar atau melihat tentang PMS (Penyakit Menular Seksual) dan berikan alasannya?",
 ];
 
 export const dareQuestions = [
-  "Sebutkan batas-batas pacaran menurut kamu ?",
-  "Ceritakan pengalamanmu yang mengalami mood swing!",
-  "Buatlah poster atau jelaskan tentang kesehatan reproduksi yang kamu ketahui!",
-  "Sebutkan perubahan fisik laki-laki saat pubertas!",
-  "Sebutkan perubahan fisik perempuan pada saat pubertas!",
-  "Sebutkan 5 mitos yang kamu terkait kesehatan reproduksi",
-  "Sebutkan dampak tidak menjaga kesehatan reproduksi!",
-  "Sebutkan bagian tubuh yang tidak boleh disentuh kepada yang tidak disetujui?",
-  "Apa yang kamu lakukan ketika tahu temanmu mengalami menstruasi pertama kali ?",
+  "Coba kamu sebutkan batas-batas pacaran menurut kamu?",
+  "Aku tantang kamu ceritakan pengalamanmu yang menghadapi mood swing!",
+  "Sebutkan gejala-gejala kanker serviks yang kamu ketahui 10 menit, jika tidak bisa kamu harus bernyanyi lagu anak-anak!",
+  "Coba tirukan suara laki-laki yang sedang mengalami perubahan suara saat pubertas, sambil menyebutkan 3 perubahan fisik lainnya pada laki-laki!",
+  "Sebutkan perubahan fisik perempuan pada saat pubertas secara cepat yang kamu ketahui tanpa terlewat!",
+  "Aku tantang kamu membongkar 5 mitos kesehatan reproduksi yang masih dipercaya orang di sekitarmu, lalu jelaskan faktanya dengan gaya ala influencer kesehatan!",
+  "Jelaskan dengan ekspresi paling serius, apa dampak fatal jika seseorang mengabaikan kesehatan reproduksinya?",
+  'Sebutkan area "Red Zone" (tubuh yang tidak boleh disentuh tanpa persetujuan) pada tubuhmu sendiri atau orang lain, dan peragakan pose "Stop" yang paling tegas!',
+  "Bayangkan temanmu tiba-tiba panik karena menstruasi pertama di sekolah/kantor. Praktikkan secara langsung (roleplay) apa kalimat pertama yang akan kamu ucapkan dan tindakan apa yang akan kamu lakukan untuk menolongnya!",
   "Ajak satu temanmu menyebutkan dan menjelaskan produk apa saja yang katanya untuk kesehatan tapi padahal tidak boleh digunakan pada alat kelamin?",
+  'Aku tantang kamu untuk merumuskan 3 strategi "Benteng Pertahanan" untuk mencegah penyimpangan seksual di lingkungan pertemananmu. Bagaimana cara kamu mengomunikasikan batasan (boundaries) tanpa terlihat kaku?',
+  "Sebutkan 3 fakta tentang kanker serviks dalam 1 menit!",
+  "Buatkan dan bacaklah satu slogan kampanye pencegahan kanker serviks versi kamu sendiri!",
+  "Buatlah pantun kampanye menjaga kesehatan reproduksi!",
+  "Ajak satu temanmu untuk menyebutkan pola hidup sehat apa aja untuk menjaga kesehatan reproduksi!",
 ];
 
 export const hotsQuestions = [
-  "Mengapa remaja wanita 13-18 tahun dilarang hamil?",
-  "Sebutkan minimal usia menikah menurut UU dan BKKBN?",
+  "Mengapa remaja wanita di bawah 18 tahun dilarang melakukan hubungan seksual?",
+  "Sebutkan minimal usia menikah menurut UU dan Kemendukbangga/BKKBN?",
   "Jelaskan penyakit PCOS menurut kamu!",
-  "Bagaimana cara membersihkan rambut pada alat kelamin?",
-  "Sebutkan bentuk-bentuk pelecehan seksual!",
-  "Berikan pendapatmu tentang penyimpangan seksual!",
+  "Bagaimana cara membedakan informasi kesehatan reproduksi yang benar dan salah di internet?",
+  "Sebutkan bentuk-bentuk pelecehan seksual apa aja!",
+  "Mengapa menjaga kebersihan organ reproduksi bukan hanya soal fisik, tetapi juga tanggung jawab pribadi?",
   "Apa yang harus kita lakukan ketika mengalami atau melihat pelecehan seksual?",
   "Sebutkan dampak psikologis dari kasus kehamilan tidak diinginkan!",
   "Mengapa harus melakukan pemeriksaan rutin ke dokter baik perempuan ataupun laki-laki?",
-  "Penyakit menular seksual apa saja yang kamu ketahui jelaskan!",
+  "Penyakit menular seksual apa saja yang kamu ketahui dan jelaskan!",
+  "Apa sih sebenarnya fungsi rambut pada area reproduksimu?",
+  "Bagaimana jika kita tidak menjaga kesehatan reproduksi?",
+  "Bagaimana cara mencegah terjadinya kanker serviks?",
+  "Apakah kamu setuju bahwa semua gender perlu memahami kesehatan reproduksi? Bagaimana menurutmu?",
+  "Bagaimana pendapatmu tentang anggapan kesehatan reproduksi yang masih dianggap tabu?",
 ];
 
 export const siapaAkuQuestions = [
@@ -59,6 +74,11 @@ export const siapaAkuQuestions = [
   "Aku mulai tumbuh pada perempuan remaja, aku berfungsi sebagai tempat sumber makanan bayi, siapakah aku?",
   "Aku seperti kecambah, aku hanya dimiliki oleh laki-laki, siapakah aku?",
   "Aku adalah sebuah proses runtuhnya dinding rahim, umumnya aku datang setiap sebulan sekali, siapakah aku?",
+  "Aku adalah dua kantong kecil yang berfungsi menghasilkan sperma dan hormon testosteron, siapakah aku?",
+  "Aku adalah organ luar pada pria yang berfungsi sebagai organ reproduksi dan keluarnya urine, siapakah aku?",
+  "Aku adalah kantong kulit yang melindungi testis dan menjaga suhu agar sperma tetap sehat, siapakah aku?",
+  "Aku adalah hormon pada pria, yang berperan dalam pertumbuhan otot, suara berat dan sperma, siapakah aku?",
+  "Aku berbentuk seperti cawan kecil, digunakan saat haid, dan dapat digunakan kembali setelah disterilkan. Siapakah aku?",
 ];
 
 export const siapaAkuAnswers = [
@@ -72,6 +92,11 @@ export const siapaAkuAnswers = [
   "payudara",
   "sperma",
   "menstruasi",
+  "testis",
+  "penis",
+  "skrotum",
+  "testosteron",
+  "menstrual cup",
 ];
 
 export const gambarSegments = [
@@ -124,5 +149,30 @@ export const gambarSegments = [
     id: 10,
     image: Uterus,
     title: "Uterus",
+  },
+  {
+    id: 11,
+    image: Rahim,
+    title: "PENIS",
+  },
+  {
+    id: 12,
+    image: Rahim,
+    title: "VAGINA",
+  },
+  {
+    id: 13,
+    image: Rahim,
+    title: "MENSTRUAL CUP ATAU TAMPON",
+  },
+  {
+    id: 14,
+    image: Rahim,
+    title: "SURGICAL NEEDLE",
+  },
+  {
+    id: 15,
+    image: Rahim,
+    title: "SPEKULUM (cocor bebek)",
   },
 ];

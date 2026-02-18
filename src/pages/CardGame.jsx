@@ -18,50 +18,65 @@ import { FaUsers } from "react-icons/fa"; // For Siapa Aku
 import { FaImage } from "react-icons/fa"; // For Gambar
 import { FaFire } from "react-icons/fa"; // For Hots
 
+// Import card images
+import truthCardImg from "../assets/gambarKartu/truth.png";
+import dareCardImg from "../assets/gambarKartu/dare.png";
+import siapaAkuCardImg from "../assets/gambarKartu/siapa-aku.png";
+import gambarCardImg from "../assets/gambarKartu/gambar.png";
+import hotsCardImg from "../assets/gambarKartu/hots.png";
+
 const segmentData = {
   truth: {
     title: "Truth",
-    color: "bg-red-500",
-    hoverColor: "hover:bg-red-600",
-    textColor: "text-red-500",
+    color: "#06b2f2",
+    bgColor: "bg-[#06b2f2]",
+    hoverColor: "hover:bg-[#0590c7]",
+    textColor: "text-[#06b2f2]",
     icon: <FaRegComment className="text-6xl text-white opacity-80" />,
+    cardImage: truthCardImg,
     cards: truthQuestions.map((q, i) => ({
       id: i + 1,
-      content: "Truth Challenge " + (i + 1),
+      content: "Truth " + (i + 1),
       details: q,
     })),
   },
   dare: {
     title: "Dare",
-    color: "bg-blue-500",
-    hoverColor: "hover:bg-blue-600",
-    textColor: "text-blue-500",
+    color: "#ffb1b1",
+    bgColor: "bg-[#ffb1b1]",
+    hoverColor: "hover:bg-[#ff9999]",
+    textColor: "text-[#ffb1b1]",
     icon: <GiOpenBook className="text-6xl text-white opacity-80" />,
+    cardImage: dareCardImg,
     cards: dareQuestions.map((q, i) => ({
       id: i + 1,
-      content: "Dare Challenge " + (i + 1),
+      content: "Dare " + (i + 1),
       details: q,
     })),
   },
   "siapa-aku": {
     title: "Siapa Aku?",
-    color: "bg-green-500",
-    hoverColor: "hover:bg-green-600",
-    textColor: "text-green-500",
+    color: "#be7cff",
+    bgColor: "bg-[#be7cff]",
+    hoverColor: "hover:bg-[#a860e6]",
+    textColor: "text-[#be7cff]",
     icon: <FaUsers className="text-6xl text-white opacity-80" />,
+    cardImage: siapaAkuCardImg,
     cards: siapaAkuQuestions.map((q, i) => ({
       id: i + 1,
-      content: "Siapa Aku Challenge " + (i + 1),
+      content: "Siapa Aku " + (i + 1),
       details: q,
       answer: siapaAkuAnswers[i],
     })),
   },
   gambar: {
     title: "Gambar",
-    color: "bg-yellow-500",
-    hoverColor: "hover:bg-yellow-600",
-    textColor: "text-yellow-500",
+    color: "#a2e7be",
+    bgColor: "bg-[#a2e7be]",
+    hoverColor: "hover:bg-[#8cd6a7]",
+    textColor: "text-[#a2e7be]",
     icon: <FaImage className="text-6xl text-white opacity-80" />,
+    cardImage: gambarCardImg,
     cards: gambarSegments.map((g, i) => ({
       id: i + 1,
       content: g.title,
@@ -70,13 +85,15 @@ const segmentData = {
   },
   hots: {
     title: "Hots",
-    color: "bg-purple-500",
-    hoverColor: "hover:bg-purple-600",
-    textColor: "text-purple-500",
+    color: "#ffbb56",
+    bgColor: "bg-[#ffbb56]",
+    hoverColor: "hover:bg-[#ffa830]",
+    textColor: "text-[#ffbb56]",
     icon: <FaFire className="text-6xl text-white opacity-80" />,
+    cardImage: hotsCardImg,
     cards: hotsQuestions.map((q, i) => ({
       id: i + 1,
-      content: "Hots Challenge " + (i + 1),
+      content: "Hots " + (i + 1),
       details: q,
     })),
   },
@@ -142,7 +159,7 @@ const CardGame = () => {
       // Save to localStorage
       localStorage.setItem(
         `blockedCards_${segment}`,
-        JSON.stringify(Array.from(newBlockedCards))
+        JSON.stringify(Array.from(newBlockedCards)),
       );
     }
     setSelectedCard(card);
@@ -187,7 +204,7 @@ const CardGame = () => {
                   duration: 3,
                   ease: "easeInOut",
                 }}
-                className={`p-3 rounded-full ${currentSegment.color} shadow-md`}
+                className={`p-3 rounded-full ${currentSegment.bgColor} shadow-md`}
               >
                 {React.cloneElement(currentSegment.icon, {
                   className: "text-4xl sm:text-5xl text-white",
@@ -210,7 +227,7 @@ const CardGame = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={resetCards}
-                className={`px-4 py-2 ${currentSegment.color} text-white rounded-xl font-bold shadow-lg ${currentSegment.hoverColor} transition flex items-center justify-center gap-2`}
+                className={`px-4 py-2 ${currentSegment.bgColor} text-white rounded-xl font-bold shadow-lg ${currentSegment.hoverColor} transition flex items-center justify-center gap-2`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -277,8 +294,8 @@ const CardGame = () => {
                   isBlocked
                     ? "bg-gray-400"
                     : flippedCards[index]
-                    ? currentSegment.color
-                    : currentSegment.color
+                      ? "bg-white"
+                      : "bg-white"
                 }`}
               >
                 <AnimatePresence>
@@ -288,34 +305,29 @@ const CardGame = () => {
                       initial={{ rotateY: 0 }}
                       exit={{ rotateY: 90 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute inset-0 flex flex-col items-center justify-center p-4"
+                      className="absolute inset-0"
                     >
-                      {/* <div className="absolute inset-0 bg-white/10 rounded-lg border-2 border-white/20"></div> */}
-                      <div className="relative z-10 flex flex-col items-center">
-                        <span className="mt-4 mb-2 text-white font-bold text-2xl">
-                          {/* {index + 1} */}
-                          {displayNumber}
-                        </span>
-                        {!isBlocked ? (
-                          currentSegment.icon
-                        ) : (
+                      {!isBlocked ? (
+                        <img
+                          src={currentSegment.cardImage}
+                          alt={currentSegment.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="text-6xl text-white opacity-80"
+                            className="w-20 h-30 text-white opacity-80"
                             fill="currentColor"
                             viewBox="0 0 24 24"
                           >
                             <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zm-1 16.5h2v2h-2v-2zm0-12h2v10h-2V5.5z" />
                           </svg>
-                        )}
-                        <span className="mt-4 text-white font-bold text-xl">
-                          {isBlocked ? "Used" : currentSegment.title}
-                        </span>
-                      </div>
-                      <div className="absolute inset-0 opacity-20">
-                        <div className="absolute top-2 left-2 w-8 h-8 rounded-full bg-white"></div>
-                        <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white"></div>
-                      </div>
+                          <span className="mt-2 text-white font-bold text-base">
+                            Used
+                          </span>
+                        </div>
+                      )}
                     </motion.div>
                   ) : (
                     <motion.div
@@ -324,19 +336,32 @@ const CardGame = () => {
                       animate={{ rotateY: 0 }}
                       transition={{ duration: 0.3 }}
                       className="absolute inset-0 p-3 flex flex-col items-center justify-between"
+                      style={{
+                        border: `6px solid ${currentSegment.color}`,
+                        borderRadius: "1rem",
+                      }}
                     >
                       <div className="w-full flex justify-between items-start">
-                        <span className={`text-xs font-semibold text-white`}>
+                        <span
+                          className={`text-xs font-semibold`}
+                          style={{ color: currentSegment.color }}
+                        >
                           {currentSegment.title}
                         </span>
-                        <span className="text-xs text-white">
+                        <span
+                          className="text-xs"
+                          style={{ color: currentSegment.color }}
+                        >
                           #{displayNumber}
                         </span>
                       </div>
 
                       <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
                         {segment !== "gambar" && (
-                          <h3 className="text-lg md:text-xl font-bold text-white mb-2">
+                          <h3
+                            className="text-lg md:text-xl font-bold mb-2"
+                            style={{ color: currentSegment.color }}
+                          >
                             {card.content}
                           </h3>
                         )}
@@ -344,10 +369,16 @@ const CardGame = () => {
                           <img
                             src={card.image}
                             alt={card.content}
-                            className="max-w-30 max-h-30 object-contain rounded-lg shadow-md bg-white"
+                            className="max-w-30 max-h-30 object-contain rounded-lg shadow-md"
+                            style={{
+                              border: `3px solid ${currentSegment.color}`,
+                            }}
                           />
                         ) : (
-                          <p className="text-xs md:text-sm text-white line-clamp-3">
+                          <p
+                            className="text-xs md:text-sm line-clamp-3"
+                            style={{ color: currentSegment.color }}
+                          >
                             {card.details}
                           </p>
                         )}
@@ -359,7 +390,11 @@ const CardGame = () => {
                             e.stopPropagation();
                             handleSeeYourCard(card);
                           }}
-                          className={`text-xs px-4 py-1 rounded-full ${currentSegment.textColor} bg-white text-black font-semibold cursor-pointer hover:shadow-md transition`}
+                          className="text-xs px-4 py-1 rounded-full font-semibold cursor-pointer hover:shadow-md transition"
+                          style={{
+                            backgroundColor: currentSegment.color,
+                            color: "white",
+                          }}
                         >
                           See Your Card
                         </span>
@@ -381,14 +416,15 @@ const CardGame = () => {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
               <div
-                className={`p-2 rounded-full ${currentSegment.color} bg-opacity-20`}
+                className="p-2 rounded-full bg-opacity-20"
+                style={{ backgroundColor: `${currentSegment.color}33` }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke={currentSegment.textColor.replace("text-", "")}
+                  stroke={currentSegment.color}
                 >
                   <path
                     strokeLinecap="round"
@@ -417,11 +453,13 @@ const CardGame = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsShuffleEnabled(!isShuffleEnabled)}
-                className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
-                  isShuffleEnabled
-                    ? `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
-                    : "bg-gray-200 hover:bg-gray-300 text-gray-700"
-                }`}
+                className="px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2"
+                style={{
+                  backgroundColor: isShuffleEnabled
+                    ? currentSegment.color
+                    : "#e5e7eb",
+                  color: isShuffleEnabled ? "white" : "#374151",
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -444,11 +482,13 @@ const CardGame = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleToggleBlocking}
-                className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
-                  isBlockingEnabled
-                    ? `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
-                    : "bg-gray-200 hover:bg-gray-300 text-gray-700"
-                }`}
+                className="px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2"
+                style={{
+                  backgroundColor: isBlockingEnabled
+                    ? currentSegment.color
+                    : "#e5e7eb",
+                  color: isBlockingEnabled ? "white" : "#374151",
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -473,14 +513,16 @@ const CardGame = () => {
                 onClick={() => {
                   const allFlipped = flippedCards.every(Boolean);
                   setFlippedCards(
-                    Array(shuffledCards.length).fill(!allFlipped)
+                    Array(shuffledCards.length).fill(!allFlipped),
                   );
                 }}
-                className={`px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2 ${
-                  flippedCards.every(Boolean)
-                    ? "bg-gray-200 hover:bg-gray-300 text-gray-700"
-                    : `${currentSegment.color} hover:${currentSegment.hoverColor} text-white`
-                }`}
+                className="px-4 py-2 rounded-xl font-medium shadow-md transition flex items-center gap-2"
+                style={{
+                  backgroundColor: flippedCards.every(Boolean)
+                    ? "#e5e7eb"
+                    : currentSegment.color,
+                  color: flippedCards.every(Boolean) ? "#374151" : "white",
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -510,8 +552,9 @@ const CardGame = () => {
           {/* Progress bar */}
           <div className="mt-3 w-full bg-gray-200 rounded-full h-2.5">
             <div
-              className={`h-2.5 rounded-full ${currentSegment.color}`}
+              className="h-2.5 rounded-full"
               style={{
+                backgroundColor: currentSegment.color,
                 width: `${
                   (flippedCards.filter(Boolean).length / shuffledCards.length) *
                   100
