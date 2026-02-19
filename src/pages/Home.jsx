@@ -60,7 +60,7 @@ const Home = () => {
 
   // Filter out removed segments
   const options = allOptions.filter(
-    (option) => !removedSegments.includes(option.label)
+    (option) => !removedSegments.includes(option.label),
   );
 
   const spinWheel = () => {
@@ -333,8 +333,8 @@ const Home = () => {
                     const angle =
                       (360 / options.length) * index + 360 / options.length / 2;
                     const radian = (angle * Math.PI) / 180;
-                    const textX = 100 + 70 * Math.cos(radian);
-                    const textY = 100 + 70 * Math.sin(radian);
+                    const textX = 100 + 60 * Math.cos(radian);
+                    const textY = 100 + 60 * Math.sin(radian);
 
                     return (
                       <text
@@ -343,12 +343,12 @@ const Home = () => {
                         y={textY}
                         textAnchor="middle"
                         fill="white"
-                        fontSize="16"
+                        fontSize="12"
                         fontWeight="bold"
                         transform={`rotate(${angle}, ${textX}, ${textY})`}
                         className="select-none"
                       >
-                        {option.label}
+                        {option.value}
                       </text>
                     );
                   })}
@@ -489,7 +489,7 @@ const Home = () => {
                         backgroundColor: result?.color || "#ccc",
                       }}
                     >
-                      Lanjutkan
+                      PILIH KARTU
                     </button>
                   </div>
                 </motion.div>
@@ -532,7 +532,7 @@ const Home = () => {
                 <div className="flex flex-wrap gap-2">
                   {removedSegments.map((label) => {
                     const option = allOptions.find(
-                      (opt) => opt.label === label
+                      (opt) => opt.label === label,
                     );
                     return (
                       <motion.button
