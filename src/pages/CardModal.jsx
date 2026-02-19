@@ -89,7 +89,7 @@ const CardModal = ({ card, segment, onClose }) => {
                         className="font-semibold text-xl mb-6 px-4 py-2 rounded-xl text-center"
                         style={{ color: segment.color }}
                       >
-                        {card.content}
+                        Answer: {card.content}
                       </motion.div>
                     )}
                   </div>
