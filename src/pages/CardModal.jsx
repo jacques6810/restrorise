@@ -64,12 +64,36 @@ const CardModal = ({ card, segment, onClose }) => {
               )}
 
               {segment.title === "Gambar" ? (
-                <img
-                  src={card.image}
-                  alt={card.content}
-                  className="max-w-80 max-h-80 object-contain rounded-lg shadow-md mb-6"
-                  style={{ border: `4px solid ${segment.color}` }}
-                />
+                <>
+                  <img
+                    src={card.image}
+                    alt={card.content}
+                    className="max-w-80 max-h-80 object-contain rounded-lg shadow-md mb-6"
+                    style={{ border: `4px solid ${segment.color}` }}
+                  />
+                  <div className="w-full flex flex-col items-center">
+                    {!showAnswer ? (
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={() => setShowAnswer(true)}
+                        className="px-6 py-2 text-white rounded-full font-semibold shadow-lg mb-4 transition"
+                        style={{ backgroundColor: segment.color }}
+                      >
+                        Reveal Answer
+                      </motion.button>
+                    ) : (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="font-semibold text-xl mb-6 px-4 py-2 rounded-xl text-center"
+                        style={{ color: segment.color }}
+                      >
+                        {card.content}
+                      </motion.div>
+                    )}
+                  </div>
+                </>
               ) : (
                 <>
                   <p

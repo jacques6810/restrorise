@@ -28,10 +28,10 @@ import hotsCardImg from "../assets/gambarKartu/hots.png";
 const segmentData = {
   truth: {
     title: "Truth",
-    color: "#06b2f2",
-    bgColor: "bg-[#06b2f2]",
-    hoverColor: "hover:bg-[#0590c7]",
-    textColor: "text-[#06b2f2]",
+    color: "#f87171",
+    bgColor: "bg-[#f87171]",
+    hoverColor: "hover:bg-[#ef4444]",
+    textColor: "text-[#f87171]",
     icon: <FaRegComment className="text-6xl text-white opacity-80" />,
     cardImage: truthCardImg,
     cards: truthQuestions.map((q, i) => ({
@@ -42,10 +42,10 @@ const segmentData = {
   },
   dare: {
     title: "Dare",
-    color: "#ffb1b1",
-    bgColor: "bg-[#ffb1b1]",
-    hoverColor: "hover:bg-[#ff9999]",
-    textColor: "text-[#ffb1b1]",
+    color: "#60a5fa",
+    bgColor: "bg-[#60a5fa]",
+    hoverColor: "hover:bg-[#3b82f6]",
+    textColor: "text-[#60a5fa]",
     icon: <GiOpenBook className="text-6xl text-white opacity-80" />,
     cardImage: dareCardImg,
     cards: dareQuestions.map((q, i) => ({
@@ -56,10 +56,10 @@ const segmentData = {
   },
   "siapa-aku": {
     title: "Siapa Aku?",
-    color: "#be7cff",
-    bgColor: "bg-[#be7cff]",
-    hoverColor: "hover:bg-[#a860e6]",
-    textColor: "text-[#be7cff]",
+    color: "#34d399",
+    bgColor: "bg-[#34d399]",
+    hoverColor: "hover:bg-[#10b981]",
+    textColor: "text-[#34d399]",
     icon: <FaUsers className="text-6xl text-white opacity-80" />,
     cardImage: siapaAkuCardImg,
     cards: siapaAkuQuestions.map((q, i) => ({
@@ -71,10 +71,10 @@ const segmentData = {
   },
   gambar: {
     title: "Gambar",
-    color: "#a2e7be",
-    bgColor: "bg-[#a2e7be]",
-    hoverColor: "hover:bg-[#8cd6a7]",
-    textColor: "text-[#a2e7be]",
+    color: "#fbbf24",
+    bgColor: "bg-[#fbbf24]",
+    hoverColor: "hover:bg-[#f59e0b]",
+    textColor: "text-[#fbbf24]",
     icon: <FaImage className="text-6xl text-white opacity-80" />,
     cardImage: gambarCardImg,
     cards: gambarSegments.map((g, i) => ({
@@ -85,10 +85,10 @@ const segmentData = {
   },
   hots: {
     title: "Hots",
-    color: "#ffbb56",
-    bgColor: "bg-[#ffbb56]",
-    hoverColor: "hover:bg-[#ffa830]",
-    textColor: "text-[#ffbb56]",
+    color: "#a78bfa",
+    bgColor: "bg-[#a78bfa]",
+    hoverColor: "hover:bg-[#8b5cf6]",
+    textColor: "text-[#a78bfa]",
     icon: <FaFire className="text-6xl text-white opacity-80" />,
     cardImage: hotsCardImg,
     cards: hotsQuestions.map((q, i) => ({

@@ -1,13 +1,18 @@
-import Ovarium from "./assets/gambarSegments/ovarium.jpg";
-import Gonore from "./assets/gambarSegments/gonore.jpg";
-import Herpes from "./assets/gambarSegments/herpes.png";
-import HIV from "./assets/gambarSegments/hiv.jpg";
-import KantungKemih from "./assets/gambarSegments/kantungKemih.png";
-import Klamida from "./assets/gambarSegments/klamida.jpg";
-import Rahim from "./assets/gambarSegments/rahim.jpg";
-import Serviks from "./assets/gambarSegments/serviks.jpg";
-import Sifilis from "./assets/gambarSegments/sifilis.jpeg";
-import Uterus from "./assets/gambarSegments/uterus.jpg";
+import Ovarium from "./assets/newest-resprorise/OVARIUM.jpg";
+import Gonore from "./assets/newest-resprorise/Gonore.jpg";
+import Herpes from "./assets/newest-resprorise/Herpes.jpg";
+import HIV from "./assets/newest-resprorise/HIV.jpg";
+import Klamidia from "./assets/newest-resprorise/Klamidia.jpg";
+import Rahim from "./assets/newest-resprorise/rahim.jpg";
+import Serviks from "./assets/newest-resprorise/SERVIKS.jpg";
+import Sifilis from "./assets/newest-resprorise/Sifilis.jpg";
+import Penis from "./assets/newest-resprorise/Penis.jpg";
+import Vagina from "./assets/newest-resprorise/Vagina.jpg";
+import MenstrualCup from "./assets/newest-resprorise/Menstrual cup atau Tampon.jpg";
+import SurgicalNeedle from "./assets/newest-resprorise/Surgical Needle.jpg";
+import Spekulum from "./assets/newest-resprorise/Spekulum (cocor bebek).jpg";
+import Okidometer from "./assets/newest-resprorise/Okidometer.jpg";
+import ProbeTransvaginal from "./assets/newest-resprorise/Probe Transvaginal.jpg";
 
 export const truthQuestions = [
   "Dalam sehari berapa kali kamu mengganti celana dalammu dan kenapa?",
@@ -122,57 +127,57 @@ export const gambarSegments = [
   },
   {
     id: 5,
-    image: KantungKemih,
-    title: "Kantung Kemih",
+    image: Klamidia,
+    title: "Klamidia",
   },
   {
     id: 6,
-    image: Klamida,
-    title: "Klamida",
-  },
-  {
-    id: 7,
     image: Rahim,
     title: "Rahim",
   },
   {
-    id: 8,
+    id: 7,
     image: Serviks,
     title: "Serviks",
   },
   {
-    id: 9,
+    id: 8,
     image: Sifilis,
     title: "Sifilis",
   },
   {
+    id: 9,
+    image: Penis,
+    title: "Penis",
+  },
+  {
     id: 10,
-    image: Uterus,
-    title: "Uterus",
+    image: Vagina,
+    title: "Vagina",
   },
   {
     id: 11,
-    image: Rahim,
-    title: "PENIS",
+    image: MenstrualCup,
+    title: "Menstrual Cup",
   },
   {
     id: 12,
-    image: Rahim,
-    title: "VAGINA",
+    image: SurgicalNeedle,
+    title: "Surgical Needle",
   },
   {
     id: 13,
-    image: Rahim,
-    title: "MENSTRUAL CUP ATAU TAMPON",
+    image: Spekulum,
+    title: "Spekulum (cocor bebek)",
   },
   {
     id: 14,
-    image: Rahim,
-    title: "SURGICAL NEEDLE",
+    image: Okidometer,
+    title: "Okidometer",
   },
   {
     id: 15,
-    image: Rahim,
-    title: "SPEKULUM (cocor bebek)",
+    image: ProbeTransvaginal,
+    title: "Probe Transvaginal",
   },
 ];
