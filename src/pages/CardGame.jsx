@@ -28,6 +28,7 @@ import hotsCardImg from "../assets/gambarKartu/hots.png";
 const segmentData = {
   truth: {
     title: "Truth",
+    description: "Kartu Truth berisi pertanyaan seputar kesehatan reproduksi yang harus dijawab oleh siswa.",
     color: "#f87171",
     bgColor: "bg-[#f87171]",
     hoverColor: "hover:bg-[#ef4444]",
@@ -42,6 +43,7 @@ const segmentData = {
   },
   dare: {
     title: "Dare",
+    description: "Kartu Dare berisi tantangan seputar kesehatan reproduksi yang harus dilakukan oleh siswa.",
     color: "#60a5fa",
     bgColor: "bg-[#60a5fa]",
     hoverColor: "hover:bg-[#3b82f6]",
@@ -56,6 +58,7 @@ const segmentData = {
   },
   "siapa-aku": {
     title: "Siapa Aku?",
+    description: "Kartu “Siapa Aku” berisi petunjuk tentang istilah atau bagian dalam kesehatan reproduksi yang harus ditebak oleh siswa.",
     color: "#34d399",
     bgColor: "bg-[#34d399]",
     hoverColor: "hover:bg-[#10b981]",
@@ -71,6 +74,7 @@ const segmentData = {
   },
   gambar: {
     title: "Gambar",
+    description: "Kartu Gambar berisi ilustrasi terkait kesehatan reproduksi yang harus ditebak dan dijelaskan oleh siswa.",
     color: "#fbbf24",
     bgColor: "bg-[#fbbf24]",
     hoverColor: "hover:bg-[#f59e0b]",
@@ -85,6 +89,7 @@ const segmentData = {
   },
   hots: {
     title: "Hots",
+    description: "Kartu HOTS berisi soal atau studi kasus tentang kesehatan reproduksi yang menuntut siswa menganalisis, mengevaluasi, dan memberikan solusi secara kritis.",
     color: "#a78bfa",
     bgColor: "bg-[#a78bfa]",
     hoverColor: "hover:bg-[#8b5cf6]",
@@ -216,8 +221,8 @@ const CardGame = () => {
                 >
                   {currentSegment.title} Cards
                 </h1>
-                <p className="text-sm sm:text-base text-gray-600 font-medium">
-                  Pick a card and have fun!
+                <p className="text-sm max-w-sm sm:text-base text-gray-600 font-medium">
+                  {currentSegment.description}
                 </p>
               </div>
             </div>
