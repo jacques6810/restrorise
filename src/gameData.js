@@ -43,7 +43,7 @@ export const dareQuestions = [
   'Sebutkan area "Red Zone" (tubuh yang tidak boleh disentuh tanpa persetujuan) pada tubuhmu sendiri atau orang lain, dan peragakan pose "Stop" yang paling tegas!',
   "Bayangkan temanmu tiba-tiba panik karena menstruasi pertama di sekolah/kantor. Praktikkan secara langsung (roleplay) apa kalimat pertama yang akan kamu ucapkan dan tindakan apa yang akan kamu lakukan untuk menolongnya!",
   "Ajak satu temanmu menyebutkan dan menjelaskan produk apa saja yang katanya untuk kesehatan tapi padahal tidak boleh digunakan pada alat kelamin?",
-  'Aku tantang kamu untuk merumuskan 3 strategi "Benteng Pertahanan" untuk mencegah penyimpangan seksual di lingkungan pertemananmu. Bagaimana cara kamu mengomunikasikan batasan (boundaries) tanpa terlihat kaku?',
+  'Aku tantang kamu untuk merumuskan 3 strategi "Benteng Pertahanan" untuk mencegah penyimpangan seksual di lingkungan pertemananmu!',
   "Sebutkan 3 fakta tentang kanker serviks dalam 1 menit!",
   "Buatkan dan bacaklah satu slogan kampanye pencegahan kanker serviks versi kamu sendiri!",
   "Buatlah pantun kampanye menjaga kesehatan reproduksi!",
