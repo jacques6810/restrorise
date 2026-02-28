@@ -298,7 +298,7 @@ const CardGame = () => {
                   scale: isBlocked ? 1 : flippedCards[index] ? 1.02 : 1.05,
                 }}
                 whileTap={{ scale: isBlocked ? 1 : 0.95 }}
-                className={`relative aspect-[3/4] w-full max-w-[180px] md:max-w-[200px] lg:max-w-none lg:h-64 rounded-2xl shadow-xl overflow-hidden transition ${
+                className={`relative aspect-[3/4] w-full max-w-[180px] md:max-w-[200px] lg:max-w-none lg:h-[19rem] rounded-2xl shadow-xl overflow-hidden transition ${
                   isBlocked ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
                 } ${
                   isBlocked
