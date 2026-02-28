@@ -29,7 +29,7 @@ export const truthQuestions = [
   "Bagaimana caramu memilih pakaian dalam yang nyaman untuk sehari-hari, dan alasannya?",
   "Apa keselahan kecil yang masih sering atau pernah kamu lakukan untuk kebersihan reproduksi, dan apa alasannya?",
   "Pernahkan kamu merasa tidak nyaman pada area kemaluanmu, tetapi kamu memilih diam? Berikan alasannya.",
-  "Apa yang ada dipikiranmu ketika mendengar atau melihat tentang PMS (Penyakit Menular Seksual) dan berikan alasannya?",
+  "Apa yang ada dipikiranmu ketika mendengar atau melihat tentang IMS (Infeksi Menular Seksual) dan berikan alasannya?",
 ];
 
 export const dareQuestions = [
@@ -45,7 +45,7 @@ export const dareQuestions = [
   "Ajak satu temanmu menyebutkan dan menjelaskan produk apa saja yang katanya untuk kesehatan tapi padahal tidak boleh digunakan pada alat kelamin?",
   'Aku tantang kamu untuk merumuskan 3 strategi "Benteng Pertahanan" untuk mencegah penyimpangan seksual di lingkungan pertemananmu!',
   "Sebutkan 3 fakta tentang kanker serviks dalam 1 menit!",
-  "Buatkan dan bacaklah satu slogan kampanye pencegahan kanker serviks versi kamu sendiri!",
+  "Buatkan dan bacalah satu slogan kampanye pencegahan kanker serviks versi kamu sendiri!",
   "Buatlah pantun kampanye menjaga kesehatan reproduksi!",
   "Ajak satu temanmu untuk menyebutkan pola hidup sehat apa aja untuk menjaga kesehatan reproduksi!",
 ];
